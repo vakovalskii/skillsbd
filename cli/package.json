@@ -1,0 +1,18 @@
+{
+  "name": "skillsru",
+  "version": "0.1.0",
+  "description": "CLI для установки AI-агент навыков из каталога Skills.RU",
+  "bin": {
+    "skillsru": "./src/index.js"
+  },
+  "type": "module",
+  "keywords": [
+    "ai",
+    "agent",
+    "skills",
+    "claude",
+    "cursor",
+    "copilot"
+  ],
+  "license": "MIT"
+}
