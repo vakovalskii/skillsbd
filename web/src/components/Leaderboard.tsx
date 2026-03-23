@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { formatInstalls, type Skill } from "@/data/skills";
 
@@ -18,11 +18,36 @@ export default function Leaderboard({
   totalTrending,
 }: LeaderboardProps) {
   const router = useRouter();
+  const searchRef = useRef<HTMLInputElement>(null);
   const [sortMode, setSortMode] = useState<SortMode>("all");
   const [search, setSearch] = useState("");
+  const [categoryFilter, setCategoryFilter] = useState<string>("");
+
+  // Cmd+K or / to focus search
+  useEffect(() => {
+    function handleKey(e: KeyboardEvent) {
+      if ((e.key === "k" && (e.metaKey || e.ctrlKey)) || (e.key === "/" && !["INPUT", "TEXTAREA", "SELECT"].includes((e.target as HTMLElement)?.tagName))) {
+        e.preventDefault();
+        searchRef.current?.focus();
+      }
+      if (e.key === "Escape") searchRef.current?.blur();
+    }
+    document.addEventListener("keydown", handleKey);
+    return () => document.removeEventListener("keydown", handleKey);
+  }, []);
+
+  // Unique categories from skills
+  const categories = useMemo(() => {
+    const cats = new Set(initialSkills.map((s) => s.category));
+    return Array.from(cats).sort();
+  }, [initialSkills]);
 
   const filtered = useMemo(() => {
     let list = [...initialSkills];
+
+    if (categoryFilter) {
+      list = list.filter((s) => s.category === categoryFilter);
+    }
 
     if (search) {
       const q = search.toLowerCase();
@@ -43,7 +68,6 @@ export default function Leaderboard({
         list.sort((a, b) => b.githubStars - a.githubStars);
         break;
       case "new":
-        // already sorted by server, reverse for newest first
         list.reverse();
         break;
       default:
@@ -51,77 +75,80 @@ export default function Leaderboard({
     }
 
     return list;
-  }, [sortMode, search, initialSkills]);
+  }, [sortMode, search, categoryFilter, initialSkills]);
 
   return (
     <div className="flex flex-col gap-4">
-      {/* Search */}
+      {/* Search with Cmd+K */}
       <div className="relative">
         <input
+          ref={searchRef}
           type="text"
           placeholder="Поиск навыков..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           className="w-full rounded-lg border border-gray-800 bg-gray-900 px-4 py-2.5 text-sm text-foreground placeholder:text-gray-600 outline-none focus:border-gray-600 transition-colors"
         />
-        <kbd className="absolute right-3 top-1/2 -translate-y-1/2 rounded border border-gray-700 bg-gray-800 px-1.5 py-0.5 text-[10px] text-gray-500">
-          /
-        </kbd>
+        <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-1">
+          <kbd className="rounded border border-gray-700 bg-gray-800 px-1.5 py-0.5 text-[10px] text-gray-500">
+            ⌘K
+          </kbd>
+        </div>
       </div>
 
+      {/* Category filter */}
+      {categories.length > 1 && (
+        <div className="flex flex-wrap gap-1.5">
+          <button
+            onClick={() => setCategoryFilter("")}
+            className={`rounded-md px-2.5 py-1 text-xs transition-colors ${
+              !categoryFilter
+                ? "bg-accent/15 text-accent border border-accent/30"
+                : "border border-gray-800 text-gray-500 hover:text-gray-400"
+            }`}
+          >
+            Все
+          </button>
+          {categories.map((cat) => (
+            <button
+              key={cat}
+              onClick={() => setCategoryFilter(cat === categoryFilter ? "" : cat)}
+              className={`rounded-md px-2.5 py-1 text-xs transition-colors ${
+                categoryFilter === cat
+                  ? "bg-accent/15 text-accent border border-accent/30"
+                  : "border border-gray-800 text-gray-500 hover:text-gray-400"
+              }`}
+            >
+              {cat}
+            </button>
+          ))}
+        </div>
+      )}
+
       {/* Tabs */}
-      <div className="flex gap-1 border-b border-gray-800">
-        <button
-          onClick={() => setSortMode("all")}
-          className={`px-3 py-2 text-sm transition-colors border-b-2 ${
-            sortMode === "all"
-              ? "border-accent text-foreground"
-              : "border-transparent text-gray-500 hover:text-gray-400"
-          }`}
-        >
-          За все время{" "}
-          <span className="text-gray-600">
-            ({formatInstalls(totalInstalls)})
-          </span>
-        </button>
-        <button
-          onClick={() => setSortMode("trending")}
-          className={`px-3 py-2 text-sm transition-colors border-b-2 ${
-            sortMode === "trending"
-              ? "border-accent text-foreground"
-              : "border-transparent text-gray-500 hover:text-gray-400"
-          }`}
-        >
-          Тренды 24ч{" "}
-          <span className="text-gray-600">
-            ({formatInstalls(totalTrending)})
-          </span>
-        </button>
-        <button
-          onClick={() => setSortMode("stars")}
-          className={`px-3 py-2 text-sm transition-colors border-b-2 ${
-            sortMode === "stars"
-              ? "border-accent text-foreground"
-              : "border-transparent text-gray-500 hover:text-gray-400"
-          }`}
-        >
-          ★ Звёзды
-        </button>
-        <button
-          onClick={() => setSortMode("new")}
-          className={`px-3 py-2 text-sm transition-colors border-b-2 ${
-            sortMode === "new"
-              ? "border-accent text-foreground"
-              : "border-transparent text-gray-500 hover:text-gray-400"
-          }`}
-        >
-          Новые
-        </button>
+      <div className="flex gap-1 border-b border-gray-800 overflow-x-auto">
+        {[
+          { key: "all" as const, label: `Установки (${formatInstalls(totalInstalls)})` },
+          { key: "trending" as const, label: `24ч (${formatInstalls(totalTrending)})` },
+          { key: "stars" as const, label: "★ Звёзды" },
+          { key: "new" as const, label: "Новые" },
+        ].map((tab) => (
+          <button
+            key={tab.key}
+            onClick={() => setSortMode(tab.key)}
+            className={`shrink-0 px-3 py-2 text-sm transition-colors border-b-2 ${
+              sortMode === tab.key
+                ? "border-accent text-foreground"
+                : "border-transparent text-gray-500 hover:text-gray-400"
+            }`}
+          >
+            {tab.label}
+          </button>
+        ))}
       </div>
 
       {/* Table */}
       <div className="flex flex-col">
-        {/* Header */}
         <div className="grid grid-cols-[40px_1fr_60px_60px] gap-2 px-2 py-2 text-xs text-gray-600">
           <span>#</span>
           <span>Навык</span>
@@ -129,7 +156,6 @@ export default function Leaderboard({
           <span className="text-right">↓</span>
         </div>
 
-        {/* Rows */}
         {filtered.map((skill, i) => (
           <div
             key={skill.id}
