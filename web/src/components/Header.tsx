@@ -1,8 +1,11 @@
 "use client";
 
 import { useState } from "react";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 import AuthButton from "./AuthButton";
+
+const ADMIN_USER_ID = "cmn2pemwd0000rv01qkeco1nb";
 
 const navLinks = [
   { href: "/new", label: "Новые", dot: true },
@@ -12,6 +15,8 @@ const navLinks = [
 ];
 
 export default function Header() {
+  const { data: session } = useSession();
+  const isAdmin = session?.user?.id === ADMIN_USER_ID;
   const [open, setOpen] = useState(false);
 
   return (
@@ -40,6 +45,11 @@ export default function Header() {
               )}
             </Link>
           ))}
+          {isAdmin && (
+            <Link href="/admin" className="text-red-400 transition-colors hover:text-red-300">
+              Админ
+            </Link>
+          )}
           <AuthButton />
         </nav>
 

@@ -4,7 +4,7 @@ import { useState, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { formatInstalls, type Skill } from "@/data/skills";
 
-type SortMode = "all" | "trending" | "hot";
+type SortMode = "all" | "trending" | "stars" | "new";
 
 interface LeaderboardProps {
   initialSkills: Skill[];
@@ -39,12 +39,12 @@ export default function Leaderboard({
       case "trending":
         list.sort((a, b) => b.trending24h - a.trending24h);
         break;
-      case "hot":
-        list.sort(
-          (a, b) =>
-            b.trending24h / Math.max(b.installs, 1) -
-            a.trending24h / Math.max(a.installs, 1)
-        );
+      case "stars":
+        list.sort((a, b) => b.githubStars - a.githubStars);
+        break;
+      case "new":
+        // already sorted by server, reverse for newest first
+        list.reverse();
         break;
       default:
         list.sort((a, b) => b.installs - a.installs);
@@ -98,14 +98,24 @@ export default function Leaderboard({
           </span>
         </button>
         <button
-          onClick={() => setSortMode("hot")}
+          onClick={() => setSortMode("stars")}
           className={`px-3 py-2 text-sm transition-colors border-b-2 ${
-            sortMode === "hot"
+            sortMode === "stars"
               ? "border-accent text-foreground"
               : "border-transparent text-gray-500 hover:text-gray-400"
           }`}
         >
-          Горячее
+          ★ Звёзды
+        </button>
+        <button
+          onClick={() => setSortMode("new")}
+          className={`px-3 py-2 text-sm transition-colors border-b-2 ${
+            sortMode === "new"
+              ? "border-accent text-foreground"
+              : "border-transparent text-gray-500 hover:text-gray-400"
+          }`}
+        >
+          Новые
         </button>
       </div>
 
