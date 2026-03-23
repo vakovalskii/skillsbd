@@ -79,12 +79,14 @@ export default function AuditBadges({ skillId }: { skillId: string }) {
               <div
                 key={audit.checkName}
                 className={`rounded-lg border p-3 ${style.bg}`}
-                title={audit.details || ""}
               >
                 <p className="text-xs text-gray-500 mb-1">
                   {CHECK_LABELS[audit.checkName] || audit.checkName}
                 </p>
                 <p className={`text-sm font-medium ${style.text}`}>{style.label}</p>
+                {audit.details && (
+                  <p className="text-[11px] text-gray-500 mt-1 leading-tight">{audit.details}</p>
+                )}
               </div>
             );
           })}
