@@ -44,8 +44,12 @@ jobs:
               exit 1
             fi
 
-            # Build with cache (не с нуля каждый раз)
+            # Build and deploy
             DOCKER_BUILDKIT=1 docker compose build --parallel
             docker compose up -d --remove-orphans
+
+            # Cleanup: remove old images + build cache older than 1 hour
             docker image prune -f
+            docker builder prune -af --filter 'until=1h' 2>/dev/null || true
+
             echo "Deploy complete!"
