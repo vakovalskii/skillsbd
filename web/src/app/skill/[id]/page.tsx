@@ -59,6 +59,12 @@ export default async function SkillPage({ params }: { params: Promise<{ id: stri
             <p className="text-sm font-mono">{skill.repo}</p>
             <p className="text-xs text-gray-500 mt-1">репозиторий</p>
           </div>
+          {skill.githubStars > 0 && (
+            <div className="rounded-lg border border-gray-800 bg-gray-900 p-4">
+              <p className="text-2xl font-bold text-yellow-500/80">★ {skill.githubStars}</p>
+              <p className="text-xs text-gray-500 mt-1">GitHub звёзд</p>
+            </div>
+          )}
         </div>
 
         {/* SKILL.md content */}

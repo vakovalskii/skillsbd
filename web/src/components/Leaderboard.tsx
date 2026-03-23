@@ -112,10 +112,11 @@ export default function Leaderboard({
       {/* Table */}
       <div className="flex flex-col">
         {/* Header */}
-        <div className="grid grid-cols-[40px_1fr_80px] gap-2 px-2 py-2 text-xs text-gray-600">
+        <div className="grid grid-cols-[40px_1fr_60px_60px] gap-2 px-2 py-2 text-xs text-gray-600">
           <span>#</span>
           <span>Навык</span>
-          <span className="text-right">Установки</span>
+          <span className="text-right">★</span>
+          <span className="text-right">↓</span>
         </div>
 
         {/* Rows */}
@@ -123,7 +124,7 @@ export default function Leaderboard({
           <div
             key={skill.id}
             onClick={() => router.push(`/skill/${skill.id}`)}
-            className="group grid grid-cols-[40px_1fr_80px] gap-2 rounded-lg px-2 py-3 transition-colors hover:bg-gray-900 cursor-pointer items-center"
+            className="group grid grid-cols-[40px_1fr_60px_60px] gap-2 rounded-lg px-2 py-3 transition-colors hover:bg-gray-900 cursor-pointer items-center"
           >
             <span className="text-sm text-gray-600">{i + 1}</span>
             <div className="flex flex-col gap-0.5 min-w-0">
@@ -156,6 +157,9 @@ export default function Leaderboard({
                 )}
               </div>
             </div>
+            <span className="text-sm text-yellow-500/70 text-right font-mono">
+              {skill.githubStars > 0 ? formatInstalls(skill.githubStars) : "—"}
+            </span>
             <span className="text-sm text-gray-400 text-right font-mono">
               {sortMode === "trending"
                 ? `+${formatInstalls(skill.trending24h)}`

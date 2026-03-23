@@ -13,6 +13,7 @@ export interface Skill {
   authorName: string | null;
   telegramLink: string | null;
   featured: boolean;
+  githubStars: number;
 }
 
 export async function getSkills(sort: "all" | "trending" = "all"): Promise<Skill[]> {

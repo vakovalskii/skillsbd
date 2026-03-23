@@ -10,7 +10,7 @@ if (process.env.GITHUB_TOKEN) {
   headers.Authorization = `Bearer ${process.env.GITHUB_TOKEN}`;
 }
 
-// Пути где может лежать SKILL.md
+// Пути где может лежать SKILL.md или README.md (fallback)
 function getPaths(name: string): string[] {
   return [
     `plugins/${name}/skills/${name}/SKILL.md`,
@@ -18,6 +18,7 @@ function getPaths(name: string): string[] {
     `skills/${name}/SKILL.md`,
     `${name}/SKILL.md`,
     "SKILL.md",
+    "README.md",
   ];
 }
 
