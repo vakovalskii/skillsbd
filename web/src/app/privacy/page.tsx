@@ -43,14 +43,14 @@ export default function PrivacyPage() {
             <h2 className="text-lg font-semibold text-foreground mb-2">4. Удаление данных</h2>
             <p>
               Вы можете запросить удаление вашего аккаунта и всех связанных данных,
-              написав нам в Telegram: <a href="https://t.me/skillsbd" className="text-accent hover:underline">@skillsbd</a>.
+              написав нам в Telegram: <a href="https://t.me/neuraldeep" className="text-accent hover:underline">@skillsbd</a>.
             </p>
           </section>
 
           <section>
             <h2 className="text-lg font-semibold text-foreground mb-2">5. Контакты</h2>
             <p>
-              По вопросам конфиденциальности: <a href="https://t.me/skillsbd" className="text-accent hover:underline">@skillsbd</a> в Telegram.
+              По вопросам конфиденциальности: <a href="https://t.me/neuraldeep" className="text-accent hover:underline">@skillsbd</a> в Telegram.
             </p>
           </section>
         </div>

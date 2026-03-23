@@ -46,7 +46,7 @@ export default function AboutPage() {
             </p>
             <div className="flex gap-3">
               <a
-                href="https://github.com/vakovalskii/skillsbd"
+                href="https://github.com/vakovalskii/skillsbd-skills"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="rounded-md border border-gray-800 px-4 py-2 text-sm text-foreground hover:border-gray-600 transition-colors"
@@ -54,7 +54,7 @@ export default function AboutPage() {
                 GitHub
               </a>
               <a
-                href="https://t.me/skillsbd"
+                href="https://t.me/neuraldeep"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="rounded-md border border-gray-800 px-4 py-2 text-sm text-foreground hover:border-gray-600 transition-colors"

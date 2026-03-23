@@ -18,7 +18,7 @@ export default function BlogPage() {
           <p className="text-gray-600 text-sm">
             Подпишитесь на{" "}
             <a
-              href="https://t.me/skillsbd"
+              href="https://t.me/neuraldeep"
               target="_blank"
               rel="noopener noreferrer"
               className="text-accent hover:underline"
