@@ -56,6 +56,21 @@ model Skill {
   authorId     String?
   author       User?    @relation(fields: [authorId], references: [id])
 
+  audits       Audit[]
+
   @@index([category])
   @@index([installs])
+}
+
+model Audit {
+  id        String   @id @default(cuid())
+  skillId   String
+  checkName String
+  status    String   @default("pending")
+  details   String?
+  createdAt DateTime @default(now())
+  skill     Skill    @relation(fields: [skillId], references: [id], onDelete: Cascade)
+
+  @@unique([skillId, checkName])
+  @@index([skillId])
 }

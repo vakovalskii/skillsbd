@@ -1,4 +1,5 @@
 import Header from "@/components/Header";
+import AuditBadges from "@/components/AuditBadges";
 import { prisma } from "@/lib/db";
 import { notFound } from "next/navigation";
 import { formatInstalls } from "@/data/skills";
@@ -87,6 +88,11 @@ export default async function SkillPage({ params }: { params: Promise<{ id: stri
             </div>
           </div>
         )}
+
+        {/* Audit */}
+        <div className="mb-8">
+          <AuditBadges skillId={skill.id} />
+        </div>
 
         {/* Tags */}
         {skill.tags.length > 0 && (
