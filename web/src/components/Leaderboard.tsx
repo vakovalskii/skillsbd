@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useMemo } from "react";
+import { useRouter } from "next/navigation";
 import { formatInstalls, type Skill } from "@/data/skills";
 
 type SortMode = "all" | "trending" | "hot";
@@ -16,6 +17,7 @@ export default function Leaderboard({
   totalInstalls,
   totalTrending,
 }: LeaderboardProps) {
+  const router = useRouter();
   const [sortMode, setSortMode] = useState<SortMode>("all");
   const [search, setSearch] = useState("");
 
@@ -120,6 +122,7 @@ export default function Leaderboard({
         {filtered.map((skill, i) => (
           <div
             key={skill.id}
+            onClick={() => router.push(`/skill/${skill.id}`)}
             className="group grid grid-cols-[40px_1fr_80px] gap-2 rounded-lg px-2 py-3 transition-colors hover:bg-gray-900 cursor-pointer items-center"
           >
             <span className="text-sm text-gray-600">{i + 1}</span>
