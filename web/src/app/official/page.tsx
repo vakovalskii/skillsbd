@@ -33,7 +33,7 @@ export default async function EditorsPickPage() {
             {skills.map((skill) => (
               <a
                 key={skill.id}
-                href={`/skill/${skill.name}`}
+                href={`/skill/${skill.name.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9а-яё\-]/gi, '')}`}
                 className="flex items-center gap-4 rounded-lg border border-gray-800 bg-gray-900 p-4 hover:border-gray-700 transition-colors"
               >
                 <div className="flex-1 min-w-0">

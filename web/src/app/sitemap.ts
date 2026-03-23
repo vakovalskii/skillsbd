@@ -28,7 +28,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   ];
 
   const skillPages = skills.map((skill) => ({
-    url: `${baseUrl}/skill/${skill.name}`,
+    url: `${baseUrl}/skill/${skill.name.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/gi, '')}`,
     lastModified: skill.updatedAt,
     changeFrequency: "weekly" as const,
     priority: 0.8,

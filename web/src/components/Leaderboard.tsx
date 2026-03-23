@@ -2,7 +2,7 @@
 
 import { useState, useMemo, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
-import { formatInstalls, type Skill } from "@/data/skills";
+import { formatInstalls, toSlug, type Skill } from "@/data/skills";
 
 type SortMode = "all" | "trending" | "stars" | "new";
 
@@ -159,7 +159,7 @@ export default function Leaderboard({
         {filtered.map((skill, i) => (
           <div
             key={skill.id}
-            onClick={() => router.push(`/skill/${skill.name}`)}
+            onClick={() => router.push(`/skill/${toSlug(skill.name)}`)}
             className="group grid grid-cols-[40px_1fr_60px_60px] gap-2 rounded-lg px-2 py-3 transition-colors hover:bg-gray-900 cursor-pointer items-center"
           >
             <span className="text-sm text-gray-600">{i + 1}</span>

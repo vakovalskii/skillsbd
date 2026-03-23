@@ -82,7 +82,7 @@ export default function AdminSkillsPage() {
             <div key={skill.id} className="flex items-center gap-4 rounded-lg border border-gray-800 bg-gray-900 p-3">
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2">
-                  <a href={`/skill/${skill.name}`} className="font-medium text-sm hover:text-accent transition-colors truncate">
+                  <a href={`/skill/${skill.name.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9а-яё\-]/gi, '')}`} className="font-medium text-sm hover:text-accent transition-colors truncate">
                     {skill.name}
                   </a>
                   <span className={`rounded px-1.5 py-0.5 text-[10px] ${skill.status === "approved" ? "bg-green-900/30 text-green-400" : "bg-yellow-900/30 text-yellow-400"}`}>

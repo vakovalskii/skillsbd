@@ -52,7 +52,7 @@ export default async function CursorAISkillsPage() {
           {skills.map((skill) => (
             <Link
               key={skill.id}
-              href={`/skill/${skill.name}`}
+              href={`/skill/${skill.name.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9а-яё\-]/gi, '')}`}
               className="flex items-center justify-between rounded-lg border border-gray-800 bg-gray-900 p-4 hover:border-gray-700 transition-colors"
             >
               <div>

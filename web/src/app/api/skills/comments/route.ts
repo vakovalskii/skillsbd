@@ -8,7 +8,7 @@ export async function GET(request: NextRequest) {
 
   const comments = await prisma.comment.findMany({
     where: { skillId },
-    orderBy: { createdAt: "desc" },
+    orderBy: { createdAt: "asc" },
     include: { user: { select: { name: true, image: true } } },
     take: 50,
   });

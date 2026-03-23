@@ -38,7 +38,7 @@ export default function Comments({ skillId }: { skillId: string }) {
       });
       if (res.ok) {
         const comment = await res.json();
-        setComments((prev) => [comment, ...prev]);
+        setComments((prev) => [...prev, comment]);
         setText("");
       }
     } catch {}
@@ -51,8 +51,35 @@ export default function Comments({ skillId }: { skillId: string }) {
         Комментарии{comments.length > 0 && ` (${comments.length})`}
       </h2>
 
+      {/* Comments list — old first, new at bottom */}
+      {comments.length === 0 ? (
+        <p className="text-sm text-gray-600 mb-4">Пока нет комментариев</p>
+      ) : (
+        <div className="flex flex-col gap-4 mb-4">
+          {comments.map((c) => (
+            <div key={c.id} className="flex gap-3">
+              {c.user.image ? (
+                <img src={c.user.image} alt="" className="h-7 w-7 rounded-full shrink-0 mt-0.5" />
+              ) : (
+                <div className="h-7 w-7 rounded-full bg-gray-800 shrink-0 mt-0.5" />
+              )}
+              <div className="min-w-0">
+                <div className="flex items-center gap-2">
+                  <span className="text-sm font-medium">{c.user.name || "Аноним"}</span>
+                  <span className="text-xs text-gray-600">
+                    {new Date(c.createdAt).toLocaleDateString("ru-RU", { day: "numeric", month: "short" })}
+                  </span>
+                </div>
+                <p className="text-sm text-gray-400 mt-0.5 whitespace-pre-wrap break-words">{c.text}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* Comment form — at the bottom */}
       {session ? (
-        <form onSubmit={handleSubmit} className="mb-4">
+        <form onSubmit={handleSubmit}>
           <div className="flex gap-3">
             {session.user?.image && (
               <img src={session.user.image} alt="" className="h-8 w-8 rounded-full shrink-0 mt-1" />
@@ -80,33 +107,8 @@ export default function Comments({ skillId }: { skillId: string }) {
           </div>
         </form>
       ) : (
-        <div className="rounded-lg border border-gray-800 bg-gray-900 p-4 text-center text-sm text-gray-500 mb-4">
+        <div className="rounded-lg border border-gray-800 bg-gray-900 p-4 text-center text-sm text-gray-500">
           <a href="/api/auth/signin" className="text-accent hover:underline">Войдите через GitHub</a> чтобы оставить комментарий
-        </div>
-      )}
-
-      {comments.length === 0 ? (
-        <p className="text-sm text-gray-600">Пока нет комментариев</p>
-      ) : (
-        <div className="flex flex-col gap-4">
-          {comments.map((c) => (
-            <div key={c.id} className="flex gap-3">
-              {c.user.image ? (
-                <img src={c.user.image} alt="" className="h-7 w-7 rounded-full shrink-0 mt-0.5" />
-              ) : (
-                <div className="h-7 w-7 rounded-full bg-gray-800 shrink-0 mt-0.5" />
-              )}
-              <div className="min-w-0">
-                <div className="flex items-center gap-2">
-                  <span className="text-sm font-medium">{c.user.name || "Аноним"}</span>
-                  <span className="text-xs text-gray-600">
-                    {new Date(c.createdAt).toLocaleDateString("ru-RU", { day: "numeric", month: "short" })}
-                  </span>
-                </div>
-                <p className="text-sm text-gray-400 mt-0.5 whitespace-pre-wrap break-words">{c.text}</p>
-              </div>
-            </div>
-          ))}
         </div>
       )}
     </div>

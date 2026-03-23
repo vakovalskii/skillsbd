@@ -41,6 +41,10 @@ export async function getTotalTrending(): Promise<number> {
   return result._sum.trending24h ?? 0;
 }
 
+export function toSlug(name: string): string {
+  return name.toLowerCase().replace(/\s+/g, "-").replace(/[^a-z0-9а-яё\-]/gi, "");
+}
+
 export function formatInstalls(n: number): string {
   if (n >= 1000000) return (n / 1000000).toFixed(1) + "M";
   if (n >= 1000) return (n / 1000).toFixed(1) + "K";
