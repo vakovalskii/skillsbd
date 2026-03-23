@@ -90,6 +90,15 @@ export default function DocsPage() {
           </section>
 
           <section>
+            <h2 className="text-xl font-semibold mb-4">API для разработчиков</h2>
+            <p className="text-gray-400 mb-3">
+              Открытый API для интеграции с AI-агентами и собственными инструментами.
+              Авторизация не требуется для GET-запросов.
+            </p>
+            <a href="/docs/api" className="text-accent hover:underline">Полная документация API →</a>
+          </section>
+
+          <section>
             <h2 className="text-xl font-semibold mb-4">Как добавить свой навык</h2>
             <ol className="list-decimal list-inside flex flex-col gap-2 text-gray-400">
               <li>Создайте GitHub-репозиторий с файлом SKILL.md</li>

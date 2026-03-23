@@ -25,8 +25,9 @@ export async function POST(request: NextRequest) {
       authorName: authorName || null,
       telegramLink: telegramLink || null,
       authorId: session.user.id,
+      status: "pending",
     },
   });
 
-  return NextResponse.json(skill, { status: 201 });
+  return NextResponse.json({ ...skill, message: "Навык отправлен на модерацию" }, { status: 201 });
 }

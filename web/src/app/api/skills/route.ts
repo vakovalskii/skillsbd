@@ -6,15 +6,22 @@ export async function GET(request: NextRequest) {
   const sort = searchParams.get("sort") || "all";
   const q = searchParams.get("q") || "";
 
+  const baseWhere = { status: "approved" as const };
+
   const where = q
     ? {
-        OR: [
-          { name: { contains: q, mode: "insensitive" as const } },
-          { description: { contains: q, mode: "insensitive" as const } },
-          { owner: { contains: q, mode: "insensitive" as const } },
+        AND: [
+          baseWhere,
+          {
+            OR: [
+              { name: { contains: q, mode: "insensitive" as const } },
+              { description: { contains: q, mode: "insensitive" as const } },
+              { owner: { contains: q, mode: "insensitive" as const } },
+            ],
+          },
         ],
       }
-    : {};
+    : baseWhere;
 
   const orderBy =
     sort === "trending"

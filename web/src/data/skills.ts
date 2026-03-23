@@ -21,16 +21,16 @@ export async function getSkills(sort: "all" | "trending" = "all"): Promise<Skill
       ? { trending24h: "desc" as const }
       : { installs: "desc" as const };
 
-  return prisma.skill.findMany({ orderBy, take: 100 });
+  return prisma.skill.findMany({ where: { status: "approved" }, orderBy, take: 100 });
 }
 
 export async function getTotalInstalls(): Promise<number> {
-  const result = await prisma.skill.aggregate({ _sum: { installs: true } });
+  const result = await prisma.skill.aggregate({ where: { status: "approved" }, _sum: { installs: true } });
   return result._sum.installs ?? 0;
 }
 
 export async function getTotalTrending(): Promise<number> {
-  const result = await prisma.skill.aggregate({ _sum: { trending24h: true } });
+  const result = await prisma.skill.aggregate({ where: { status: "approved" }, _sum: { trending24h: true } });
   return result._sum.trending24h ?? 0;
 }
 
