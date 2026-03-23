@@ -65,7 +65,7 @@ export default function Comments({ skillId }: { skillId: string }) {
               )}
               <div className="min-w-0">
                 <div className="flex items-center gap-2">
-                  <span className="text-sm font-medium">{c.user.name || "Аноним"}</span>
+                  <a href={`/profile/${c.user.name || ""}`} className="text-sm font-medium hover:text-accent transition-colors">{c.user.name || "Аноним"}</a>
                   <span className="text-xs text-gray-600">
                     {new Date(c.createdAt).toLocaleDateString("ru-RU", { day: "numeric", month: "short" })}
                   </span>
