@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "Skill" ADD COLUMN IF NOT EXISTS "featured" BOOLEAN NOT NULL DEFAULT false;

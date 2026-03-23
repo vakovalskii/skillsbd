@@ -30,6 +30,11 @@ export default async function SkillPage({ params }: { params: Promise<{ id: stri
             <span className="rounded-md bg-gray-900 border border-gray-800 px-2 py-0.5 text-xs text-gray-400">
               {skill.category}
             </span>
+            {skill.featured && (
+              <span className="rounded-md bg-accent/15 px-2 py-0.5 text-xs font-medium text-accent">
+                рекомендован
+              </span>
+            )}
           </div>
           <p className="text-gray-400 text-lg">{skill.description}</p>
         </div>

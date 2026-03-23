@@ -127,8 +127,13 @@ export default function Leaderboard({
           >
             <span className="text-sm text-gray-600">{i + 1}</span>
             <div className="flex flex-col gap-0.5 min-w-0">
-              <span className="text-sm font-medium text-foreground truncate">
+              <span className="text-sm font-medium text-foreground truncate flex items-center gap-1.5">
                 {skill.name}
+                {skill.featured && (
+                  <span className="shrink-0 rounded bg-accent/15 px-1.5 py-0.5 text-[10px] font-medium text-accent">
+                    рекомендован
+                  </span>
+                )}
               </span>
               <div className="flex items-center gap-2 text-xs text-gray-600 truncate">
                 <span className="font-mono">{skill.owner}/{skill.repo}</span>
