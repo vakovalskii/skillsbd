@@ -18,13 +18,19 @@ export default function Header() {
       </div>
       <nav className="flex items-center gap-4 text-sm">
         <Link
-          href="/official"
+          href="/new"
           className="hidden sm:flex items-center gap-1.5 text-gray-400 transition-colors hover:text-foreground"
         >
-          Официальные
-          <span className="rounded-full border border-gray-700 px-1.5 py-0.5 text-[10px] font-medium text-gray-400">
-            New
+          Новые
+          <span className="rounded-full bg-green-900/50 border border-green-800/50 px-1.5 py-0.5 text-[10px] font-medium text-green-400">
+            {"\u2022"}
           </span>
+        </Link>
+        <Link
+          href="/official"
+          className="hidden sm:inline text-gray-400 transition-colors hover:text-foreground"
+        >
+          Официальные
         </Link>
         <Link
           href="/docs"
