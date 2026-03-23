@@ -18,6 +18,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${baseUrl}/about`, changeFrequency: "monthly" as const, priority: 0.6 },
     { url: `${baseUrl}/blog`, changeFrequency: "weekly" as const, priority: 0.6 },
     { url: `${baseUrl}/changelog`, changeFrequency: "weekly" as const, priority: 0.5 },
+    { url: `${baseUrl}/claude-code-skills`, changeFrequency: "weekly" as const, priority: 0.9 },
+    { url: `${baseUrl}/claude-code-russia`, changeFrequency: "weekly" as const, priority: 0.9 },
+    { url: `${baseUrl}/ai-agents`, changeFrequency: "weekly" as const, priority: 0.9 },
+    { url: `${baseUrl}/cursor-ai-skills`, changeFrequency: "weekly" as const, priority: 0.9 },
     { url: `${baseUrl}/privacy`, changeFrequency: "yearly" as const, priority: 0.3 },
     { url: `${baseUrl}/terms`, changeFrequency: "yearly" as const, priority: 0.3 },
   ];
