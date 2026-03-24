@@ -1,0 +1,33 @@
+{
+  "name": "create-skillsbd",
+  "version": "1.0.0",
+  "description": "Генератор корпоративных skill-библиотек для AI-агентов",
+  "bin": {
+    "create-skillsbd": "./index.js"
+  },
+  "type": "module",
+  "keywords": [
+    "skillsbd",
+    "ai-skills",
+    "claude-code",
+    "cursor",
+    "copilot",
+    "agents",
+    "corporate",
+    "skills-generator"
+  ],
+  "author": "vakovalskii",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vakovalskii/skillsbd"
+  },
+  "homepage": "https://skillsbd.ru",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  },
+  "files": [
+    "index.js",
+    "template/"
+  ]
+}

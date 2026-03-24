@@ -1,11 +1,8 @@
 "use client";
 
-import { useState } from "react";
-import { useSession } from "next-auth/react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import AuthButton from "./AuthButton";
-
-const ADMIN_USER_IDS = (process.env.NEXT_PUBLIC_ADMIN_IDS || "").split(",");
 
 const navLinks = [
   { href: "/new", label: "Новые", dot: true },
@@ -15,9 +12,15 @@ const navLinks = [
 ];
 
 export default function Header() {
-  const { data: session } = useSession();
-  const isAdmin = ADMIN_USER_IDS.includes(session?.user?.id || "");
+  const [isAdmin, setIsAdmin] = useState(false);
   const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    fetch("/api/auth/me")
+      .then((r) => r.json())
+      .then((d) => setIsAdmin(d.isAdmin === true))
+      .catch(() => {});
+  }, []);
 
   return (
     <header className="sticky top-0 z-50 border-b border-gray-800 bg-background/80 backdrop-blur-md">
