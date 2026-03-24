@@ -47,3 +47,77 @@ body {
   background: var(--gray-700);
   border-radius: 3px;
 }
+
+/* Live pulse — сервер жив */
+@keyframes live-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+.animate-live {
+  animation: live-pulse 2s ease-in-out infinite;
+}
+
+/* Glow effect for cards on hover */
+@keyframes glow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0); }
+  50% { box-shadow: 0 0 20px 0 rgba(59, 130, 246, 0.1); }
+}
+.hover-glow:hover {
+  box-shadow: 0 0 30px -5px rgba(59, 130, 246, 0.15);
+}
+
+/* Subtle shine on cards */
+.card-shine {
+  position: relative;
+  overflow: hidden;
+}
+.card-shine::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    transparent 40%,
+    rgba(255, 255, 255, 0.02) 45%,
+    rgba(255, 255, 255, 0.04) 50%,
+    rgba(255, 255, 255, 0.02) 55%,
+    transparent 60%
+  );
+  transform: translateX(-100%);
+  transition: transform 0.6s ease;
+  pointer-events: none;
+}
+.card-shine:hover::after {
+  transform: translateX(100%);
+}
+
+/* Fade in animation */
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.animate-fade-in {
+  animation: fade-in-up 0.4s ease-out forwards;
+}
+
+/* Staggered children animation */
+.stagger-children > * {
+  opacity: 0;
+  animation: fade-in-up 0.3s ease-out forwards;
+}
+.stagger-children > *:nth-child(1) { animation-delay: 0ms; }
+.stagger-children > *:nth-child(2) { animation-delay: 50ms; }
+.stagger-children > *:nth-child(3) { animation-delay: 100ms; }
+.stagger-children > *:nth-child(4) { animation-delay: 150ms; }
+.stagger-children > *:nth-child(5) { animation-delay: 200ms; }
+.stagger-children > *:nth-child(6) { animation-delay: 250ms; }
+.stagger-children > *:nth-child(7) { animation-delay: 300ms; }
+.stagger-children > *:nth-child(8) { animation-delay: 350ms; }
+.stagger-children > *:nth-child(9) { animation-delay: 400ms; }
+.stagger-children > *:nth-child(10) { animation-delay: 450ms; }

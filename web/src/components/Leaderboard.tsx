@@ -148,7 +148,7 @@ export default function Leaderboard({
       </div>
 
       {/* Table */}
-      <div className="flex flex-col">
+      <div className="flex flex-col stagger-children">
         <div className="grid grid-cols-[40px_1fr_60px_60px] gap-2 px-2 py-2 text-xs text-gray-600">
           <span>#</span>
           <span>Навык</span>
@@ -160,7 +160,7 @@ export default function Leaderboard({
           <div
             key={skill.id}
             onClick={() => router.push(`/skill/${toSlug(skill.name)}`)}
-            className="group grid grid-cols-[40px_1fr_60px_60px] gap-2 rounded-lg px-2 py-3 transition-colors hover:bg-gray-900 cursor-pointer items-center"
+            className="group grid grid-cols-[40px_1fr_60px_60px] gap-2 rounded-lg px-2 py-3 transition-all duration-200 hover:bg-gray-900 hover-glow card-shine cursor-pointer items-center"
           >
             <span className="text-sm text-gray-600">{i + 1}</span>
             <div className="flex flex-col gap-0.5 min-w-0">

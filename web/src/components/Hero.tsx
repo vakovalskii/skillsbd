@@ -15,7 +15,7 @@ export default function Hero() {
   ];
 
   return (
-    <div className="flex flex-col gap-4 py-6 sm:gap-6 sm:py-8 lg:py-12">
+    <div className="flex flex-col gap-4 py-6 sm:gap-6 sm:py-8 lg:py-12 animate-fade-in">
       <div className="flex items-baseline gap-2">
         <h1 className="text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl">
           skills<span className="text-accent">БД</span>

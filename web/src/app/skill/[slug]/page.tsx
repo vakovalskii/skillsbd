@@ -2,6 +2,7 @@ import Header from "@/components/Header";
 import AuditBadges from "@/components/AuditBadges";
 import SkillContent from "@/components/SkillContent";
 import Comments from "@/components/Comments";
+import InstallBlock from "@/components/InstallBlock";
 import { prisma } from "@/lib/db";
 import { notFound, redirect } from "next/navigation";
 import { formatInstalls } from "@/data/skills";
@@ -77,7 +78,7 @@ export default async function SkillPage({ params }: { params: Promise<{ slug: st
   return (
     <>
       <Header />
-      <main className="mx-auto w-full max-w-3xl flex-1 px-4 py-12">
+      <main className="mx-auto w-full max-w-3xl flex-1 px-4 py-12 animate-fade-in">
         <div className="mb-8">
           <div className="flex items-center flex-wrap gap-3 mb-3">
             <h1 className="text-3xl font-bold">{skill.name}</h1>
@@ -97,24 +98,24 @@ export default async function SkillPage({ params }: { params: Promise<{ slug: st
         </div>
 
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
-          <div className="rounded-lg border border-gray-800 bg-gray-900 p-4">
+          <div className="rounded-lg border border-gray-800 bg-gray-900 p-4 transition-all duration-200 hover:border-gray-700 hover-glow">
             <p className="text-2xl font-bold">{formatInstalls(skill.installs)}</p>
             <p className="text-xs text-gray-500 mt-1">установок</p>
           </div>
-          <div className="rounded-lg border border-gray-800 bg-gray-900 p-4">
+          <div className="rounded-lg border border-gray-800 bg-gray-900 p-4 transition-all duration-200 hover:border-gray-700 hover-glow">
             <p className="text-2xl font-bold text-green-400">+{formatInstalls(skill.trending24h)}</p>
             <p className="text-xs text-gray-500 mt-1">за 24 часа</p>
           </div>
-          <div className="rounded-lg border border-gray-800 bg-gray-900 p-4">
+          <div className="rounded-lg border border-gray-800 bg-gray-900 p-4 transition-all duration-200 hover:border-gray-700 hover-glow">
             <p className="text-sm font-mono text-accent">{skill.owner}</p>
             <p className="text-xs text-gray-500 mt-1">автор</p>
           </div>
-          <div className="rounded-lg border border-gray-800 bg-gray-900 p-4">
+          <div className="rounded-lg border border-gray-800 bg-gray-900 p-4 transition-all duration-200 hover:border-gray-700 hover-glow">
             <p className="text-sm font-mono">{skill.repo}</p>
             <p className="text-xs text-gray-500 mt-1">репозиторий</p>
           </div>
           {skill.githubStars > 0 && (
-            <div className="rounded-lg border border-gray-800 bg-gray-900 p-4">
+            <div className="rounded-lg border border-gray-800 bg-gray-900 p-4 transition-all duration-200 hover:border-gray-700 hover-glow">
               <p className="text-2xl font-bold text-yellow-500/80">★ {skill.githubStars}</p>
               <p className="text-xs text-gray-500 mt-1">GitHub звёзд</p>
             </div>
@@ -123,26 +124,13 @@ export default async function SkillPage({ params }: { params: Promise<{ slug: st
 
         <SkillContent skillId={skill.id} />
 
-        <div className="mb-8">
-          <h2 className="text-lg font-semibold mb-3">Установка</h2>
-          <div className="rounded-lg border border-gray-800 bg-gray-900 px-4 py-3 font-mono text-sm overflow-x-auto whitespace-nowrap mb-3">
-            <span className="text-gray-500">$ </span>
-            npx skillsbd add {skill.owner}/{skill.repo}/{skill.name}
-          </div>
-          <div className="flex gap-3">
-            <a
-              href={`https://github.com/${skill.owner}/${skill.repo}/archive/refs/heads/main.zip`}
-              className="inline-flex items-center gap-2 rounded-md border border-gray-800 px-3 py-1.5 text-xs text-gray-400 hover:border-gray-600 hover:text-foreground transition-colors"
-            >
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                <polyline points="7 10 12 15 17 10" />
-                <line x1="12" y1="15" x2="12" y2="3" />
-              </svg>
-              Скачать ZIP
-            </a>
-          </div>
-        </div>
+        <InstallBlock
+          command={`npx skillsbd add ${skill.owner}/${skill.repo}/${skill.name}`}
+          zipUrl={`https://github.com/${skill.owner}/${skill.repo}/archive/refs/heads/main.zip`}
+          skillName={skill.name}
+          owner={skill.owner}
+          repo={skill.repo}
+        />
 
         {skill.authorName && (
           <div className="mb-8">

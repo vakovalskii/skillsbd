@@ -23,8 +23,9 @@ export default function Header() {
     <header className="sticky top-0 z-50 border-b border-gray-800 bg-background/80 backdrop-blur-md">
       <div className="flex h-14 items-center justify-between px-4">
         <Link href="/" className="flex items-center gap-2">
-          <span className="flex h-6 w-6 items-center justify-center rounded bg-accent text-[10px] font-bold text-white">
+          <span className="flex h-6 w-6 items-center justify-center rounded bg-accent text-[10px] font-bold text-white relative">
             sb
+            <span className="absolute -top-0.5 -right-0.5 h-2 w-2 rounded-full bg-green-400 animate-live" />
           </span>
           <span className="text-lg font-semibold tracking-tight">skillsbd</span>
         </Link>
