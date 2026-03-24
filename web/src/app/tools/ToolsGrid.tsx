@@ -231,7 +231,8 @@ const tools: Tool[] = [
     install: "go install github.com/coddy-project/coddy-agent@latest",
     category: "AI агенты",
     tags: ["go", "tui", "react", "acp", "skills", "mcp"],
-  }
+  },
+];
 
 export default function ToolsGrid() {
   const searchRef = useRef<HTMLInputElement>(null);
