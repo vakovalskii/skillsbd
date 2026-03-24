@@ -2,12 +2,12 @@
 
 ## Сервер
 
-- **IP**: 62.84.116.76
+- **IP**: <SERVER_IP>
 - **Провайдер**: Yandex Cloud
 - **ОС**: Ubuntu
 - **CPU/RAM**: 2 cores / 1.9 GB
 - **Диск**: 69 GB
-- **SSH**: `ssh ubuntu@62.84.116.76`
+- **SSH**: `ssh ubuntu@<SERVER_IP>`
 
 ## Docker Compose
 
@@ -56,6 +56,6 @@ services:
 
 ## DNS
 
-- Cloudflare: skillsbd.ru → 62.84.116.76 (DNS only, grey cloud)
+- Cloudflare: skillsbd.ru → <SERVER_IP> (DNS only, grey cloud)
 - NS: amalia.ns.cloudflare.com, dane.ns.cloudflare.com
 - TXT: yandex-verification для Яндекс Вебмастер

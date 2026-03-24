@@ -16,7 +16,7 @@ jobs:
           mkdir -p ~/.ssh
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/deploy_key
           chmod 600 ~/.ssh/deploy_key
-          ssh-keyscan -H 62.84.116.76 >> ~/.ssh/known_hosts
+          ssh-keyscan -H ${{ secrets.DEPLOY_HOST }} >> ~/.ssh/known_hosts
 
       - name: Rsync to server
         run: |
@@ -26,12 +26,12 @@ jobs:
             --exclude node_modules \
             --exclude .next \
             -e "ssh -i ~/.ssh/deploy_key" \
-            ./ ubuntu@62.84.116.76:/opt/skillsbd/
+            ./ ubuntu@${{ secrets.DEPLOY_HOST }}:/opt/skillsbd/
 
       - name: Build and deploy
         uses: appleboy/ssh-action@v1
         with:
-          host: 62.84.116.76
+          host: ${{ secrets.DEPLOY_HOST }}
           username: ubuntu
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           command_timeout: 10m
@@ -44,11 +44,9 @@ jobs:
               exit 1
             fi
 
-            # Build and deploy
             DOCKER_BUILDKIT=1 docker compose build --parallel
             docker compose up -d --remove-orphans
 
-            # Cleanup: remove old images + build cache older than 1 hour
             docker image prune -f
             docker builder prune -af --filter 'until=1h' 2>/dev/null || true
 

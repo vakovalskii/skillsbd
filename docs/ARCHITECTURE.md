@@ -6,7 +6,7 @@
 Пользователь
     │
     ▼
-Cloudflare DNS (skillsbd.ru → 62.84.116.76)
+Cloudflare DNS (skillsbd.ru → <SERVER_IP>)
     │
     ▼
 Traefik v3 (:80/:443, TLS Let's Encrypt)

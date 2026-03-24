@@ -2,7 +2,7 @@
 
 ## NDT-AI-30-YC-FREE
 
-- **IP**: 62.84.116.76
+- **IP**: <SERVER_IP>
 - **Провайдер**: Yandex Cloud
 - **CPU**: 2 cores
 - **RAM**: 1.9Gi (используется ~459Mi)
@@ -14,7 +14,7 @@
 ## Подключение
 
 ```bash
-ssh ubuntu@62.84.116.76
+ssh ubuntu@<SERVER_IP>
 ```
 
 ## Почему эта машина
