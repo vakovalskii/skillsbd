@@ -1,5 +1,16 @@
 # CLAUDE.md — правила для AI-агентов в этом проекте
 
+## Документация
+
+Перед началом работы ознакомься с документацией:
+
+- [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) — общая схема, компоненты, потоки данных
+- [docs/DATABASE.md](docs/DATABASE.md) — модели, поля, миграции
+- [docs/API.md](docs/API.md) — все эндпоинты с параметрами
+- [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) — сервер, Docker, CI/CD, env переменные
+- [docs/SECURITY.md](docs/SECURITY.md) — аутентификация, аудит, rate limiting
+- [README.md](README.md) — быстрый старт, локальная разработка, корпоративное использование
+
 ## Git workflow
 
 **НИКОГДА не коммить напрямую в main.** Всегда:
