@@ -113,6 +113,95 @@ curl https://skillsbd.ru/api/skills?sort=trending
 
 [Полная документация API →](https://skillsbd.ru/docs/api)
 
+## Для компаний: своя библиотека навыков
+
+Создайте корпоративную библиотеку навыков для AI-агентов внутри вашей компании.
+
+### Генерация
+
+```bash
+npx create-skillsbd my-company-skills
+```
+
+Создаёт готовый npm-пакет:
+```
+my-company-skills/
+├── cli.js              # CLI: npx my-company-skills add/list
+├── skills/
+│   └── example/
+│       └── SKILL.md    # Шаблон навыка
+├── package.json
+└── README.md
+```
+
+### Добавьте навыки
+
+```
+skills/
+├── internal-api/
+│   └── SKILL.md        # Работа с внутренним API компании
+├── code-standards/
+│   └── SKILL.md        # Код-стайл и архитектурные правила
+└── deploy-process/
+    └── SKILL.md        # Процесс деплоя в вашу инфру
+```
+
+### Публикация
+
+```bash
+# Публичный npm (open source)
+npm publish --access public
+
+# GitHub Packages (приватный, привязан к GitHub org)
+npm publish --registry=https://npm.pkg.github.com
+
+# Verdaccio (self-hosted npm registry)
+npm publish --registry=https://npm.your-company.ru
+
+# JFrog Artifactory
+npm publish --registry=https://artifactory.your-company.ru/api/npm/npm-local
+
+# Nexus Repository
+npm publish --registry=https://nexus.your-company.ru/repository/npm-private/
+```
+
+### Использование разработчиками
+
+```bash
+# Из публичного npm
+npx my-company-skills add internal-api
+
+# Из приватного реестра
+npx --registry=https://npm.your-company.ru my-company-skills add internal-api
+
+# Или через .npmrc в проекте
+echo "@my-company:registry=https://npm.your-company.ru" > .npmrc
+npx @my-company/skills add internal-api
+```
+
+### Автоматизация релизов
+
+Добавьте в GitHub Actions вашего репо:
+
+```yaml
+name: Publish skills
+on:
+  push:
+    branches: [main]
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          registry-url: https://registry.npmjs.org  # или ваш реестр
+      - run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+```
+
 ## Контрибьюция
 
 1. Форкните репо
