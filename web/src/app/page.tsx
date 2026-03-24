@@ -36,6 +36,7 @@ export default async function Home() {
             <ul className="space-y-2 text-gray-500">
               <li><a href="/official" className="hover:text-foreground transition-colors">Выбор редакции</a></li>
               <li><a href="/submit" className="hover:text-foreground transition-colors">Добавить навык</a></li>
+              <li><a href="/tools" className="hover:text-foreground transition-colors">CLI инструменты</a></li>
               <li><a href="/docs" className="hover:text-foreground transition-colors">Документация</a></li>
             </ul>
           </div>
