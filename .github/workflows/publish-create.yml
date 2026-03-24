@@ -1,0 +1,39 @@
+name: Publish create-skillsbd to npm
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'create-skillsbd/**'
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          registry-url: https://registry.npmjs.org
+
+      - name: Check if version changed
+        id: version
+        run: |
+          LOCAL=$(node -p "require('./create-skillsbd/package.json').version")
+          REMOTE=$(npm view create-skillsbd version 2>/dev/null || echo "0.0.0")
+          echo "local=$LOCAL" >> $GITHUB_OUTPUT
+          echo "remote=$REMOTE" >> $GITHUB_OUTPUT
+          if [ "$LOCAL" != "$REMOTE" ]; then
+            echo "changed=true" >> $GITHUB_OUTPUT
+          else
+            echo "changed=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Publish to npm
+        if: steps.version.outputs.changed == 'true'
+        run: |
+          cd create-skillsbd
+          npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
