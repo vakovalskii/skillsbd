@@ -7,15 +7,44 @@
 
 ## Быстрый старт
 
+### Установка CLI
+
+Не требуется — работает через `npx` (Node.js 18+):
+
 ```bash
-# Поиск навыков
+npx skillsbd --help
+```
+
+### Поиск навыков
+
+```bash
 npx skillsbd search яндекс
+```
 
-# Установка навыка
+### Установка навыка
+
+```bash
 npx skillsbd add artwist-polyakov/polyakov-claude-skills/yandex-wordstat
+```
 
-# Список установленных
+Навык появится в директории `.skills/` вашего проекта. AI-агент (Claude Code, Cursor и др.) прочитает его автоматически.
+
+### Установка по GitHub URL
+
+```bash
+npx skillsbd add https://github.com/artwist-polyakov/polyakov-claude-skills --skill yandex-wordstat
+```
+
+### Список установленных
+
+```bash
 npx skillsbd list
+```
+
+### Удаление
+
+```bash
+npx skillsbd remove yandex-wordstat
 ```
 
 ## Локальная разработка
