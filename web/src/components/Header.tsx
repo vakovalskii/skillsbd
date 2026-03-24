@@ -5,7 +5,7 @@ import { useSession } from "next-auth/react";
 import Link from "next/link";
 import AuthButton from "./AuthButton";
 
-const ADMIN_USER_ID = "cmn2pemwd0000rv01qkeco1nb";
+const ADMIN_USER_IDS = (process.env.NEXT_PUBLIC_ADMIN_IDS || "").split(",");
 
 const navLinks = [
   { href: "/new", label: "Новые", dot: true },
@@ -16,7 +16,7 @@ const navLinks = [
 
 export default function Header() {
   const { data: session } = useSession();
-  const isAdmin = session?.user?.id === ADMIN_USER_ID;
+  const isAdmin = ADMIN_USER_IDS.includes(session?.user?.id || "");
   const [open, setOpen] = useState(false);
 
   return (

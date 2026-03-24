@@ -1,10 +1,11 @@
 import { auth } from "./auth";
 
-const ADMIN_USER_ID = "cmn2pemwd0000rv01qkeco1nb";
+const ADMIN_USER_IDS = (process.env.ADMIN_USER_IDS || "").split(",").filter(Boolean);
 
 export async function isAdmin(): Promise<boolean> {
   const session = await auth();
-  return session?.user?.id === ADMIN_USER_ID;
+  if (!session?.user?.id) return false;
+  return ADMIN_USER_IDS.includes(session.user.id);
 }
 
 export async function requireAdmin() {
