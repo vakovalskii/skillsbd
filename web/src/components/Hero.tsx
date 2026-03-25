@@ -30,8 +30,11 @@ export default function Hero() {
         <span className="rounded bg-accent/10 px-2 py-0.5 text-xs font-medium text-accent">
           beta
         </span>
+        <span className="rounded bg-red-900/30 border border-red-800/40 px-2 py-0.5 text-[10px] font-bold text-red-400">
+          RU
+        </span>
         <a
-          href="https://github.com/vakovalskii/skillsbd"
+          href="https://github.com/vakovalskii/neuraldeep"
           target="_blank"
           rel="noopener noreferrer"
           className="rounded bg-gray-900 border border-gray-800 px-2 py-0.5 text-[10px] text-gray-500 hover:text-gray-400 transition-colors"
@@ -41,12 +44,12 @@ export default function Hero() {
       </div>
 
       <p className="font-mono text-xs uppercase tracking-widest text-gray-500">
-        Агрегатор навыков, MCP серверов и AI-инструментов
+        Агрегатор для российских AI-разработчиков
       </p>
 
       <p className="max-w-md text-[15px] leading-relaxed text-gray-400 lg:text-base">
-        Навыки, MCP серверы, CLI инструменты для AI-агентов.
-        Яндекс, Битрикс, 1С, GigaChat и другие российские сервисы.
+        Навыки, MCP серверы и CLI инструменты для AI-агентов — собранные вокруг
+        российских сервисов: Яндекс, Битрикс, 1С, GigaChat, Wildberries и других.
       </p>
 
       <div className="flex items-center gap-2 rounded-lg border border-gray-800 bg-gray-900 px-4 py-3 font-mono text-sm w-fit card-shine">
