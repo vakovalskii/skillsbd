@@ -20,9 +20,7 @@ services:
     mem_limit: 64m
 
   app:
-    build:
-      context: ./web
-      dockerfile: Dockerfile
+    image: ghcr.io/vakovalskii/neuraldeep/app:latest
     restart: unless-stopped
     depends_on:
       postgres:

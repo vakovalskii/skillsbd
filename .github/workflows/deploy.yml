@@ -1,8 +1,12 @@
-name: Deploy to Yandex Cloud
+name: Build, Test & Deploy
 
 on:
   push:
     branches: [main]
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}/app
 
 jobs:
   test:
@@ -22,49 +26,84 @@ jobs:
       - name: Run tests
         run: cd web && npm run test
 
-  deploy:
+  build:
     runs-on: ubuntu-latest
     needs: test
+    permissions:
+      contents: read
+      packages: write
+    outputs:
+      image_tag: ${{ steps.meta.outputs.tags }}
     steps:
       - uses: actions/checkout@v4
 
-      - name: Setup SSH key
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: |
+            type=sha,prefix=
+            type=raw,value=latest
+
+      - name: Build and push
+        uses: docker/build-push-action@v6
+        with:
+          context: ./web
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup SSH
         run: |
           mkdir -p ~/.ssh
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/deploy_key
           chmod 600 ~/.ssh/deploy_key
           ssh-keyscan -H ${{ secrets.DEPLOY_HOST }} >> ~/.ssh/known_hosts
 
-      - name: Rsync to server
+      - name: Deploy to server
+        run: |
+          ssh -i ~/.ssh/deploy_key ubuntu@${{ secrets.DEPLOY_HOST }} << 'EOF'
+          set -e
+          cd /opt/skillsbd
+
+          if [ ! -f .env ]; then
+            echo "ERROR: .env not found"
+            exit 1
+          fi
+
+          # Pull new image from GHCR
+          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+          docker pull ghcr.io/${{ github.repository }}/app:latest
+
+          # Update compose to use pre-built image
+          docker compose up -d --remove-orphans
+          docker image prune -f
+
+          echo "Deploy complete!"
+          EOF
+
+      - name: Sync config files
         run: |
           rsync -avz --delete \
             --exclude .git \
             --exclude .env \
             --exclude node_modules \
             --exclude .next \
+            --exclude web/ \
             -e "ssh -i ~/.ssh/deploy_key" \
             ./ ubuntu@${{ secrets.DEPLOY_HOST }}:/opt/skillsbd/
-
-      - name: Build and deploy
-        uses: appleboy/ssh-action@v1
-        with:
-          host: ${{ secrets.DEPLOY_HOST }}
-          username: ubuntu
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          command_timeout: 10m
-          script: |
-            set -e
-            cd /opt/skillsbd
-
-            if [ ! -f .env ]; then
-              echo "ERROR: /opt/skillsbd/.env not found"
-              exit 1
-            fi
-
-            DOCKER_BUILDKIT=1 docker compose build --parallel
-            docker compose up -d --remove-orphans
-
-            docker image prune -f
-            docker builder prune -af --filter 'until=1h' 2>/dev/null || true
-
-            echo "Deploy complete!"
