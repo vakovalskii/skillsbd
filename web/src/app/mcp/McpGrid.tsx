@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useMemo, useEffect, useRef } from "react";
+import { useSearchParams } from "next/navigation";
 
 interface McpServer {
   name: string;
@@ -189,9 +190,12 @@ const servers: McpServer[] = [
 ];
 
 export default function McpGrid() {
+  const searchParams = useSearchParams();
   const searchRef = useRef<HTMLInputElement>(null);
   const [search, setSearch] = useState("");
-  const [activeCategory, setActiveCategory] = useState("");
+  const [activeCategory, setActiveCategory] = useState(() =>
+    searchParams.get("filter") === "russian" ? "Российские" : ""
+  );
 
   useEffect(() => {
     function handleKey(e: KeyboardEvent) {

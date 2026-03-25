@@ -11,6 +11,7 @@ const mainTabs = [
     label: "Skills",
     dropdown: [
       { href: "/", label: "Каталог навыков" },
+      { href: "/?filter=russian", label: "Российские" },
       { href: "/new", label: "Новые" },
       { href: "/official", label: "Выбор редакции" },
       { href: "/submit", label: "Добавить навык" },
@@ -21,7 +22,7 @@ const mainTabs = [
     label: "MCP",
     dropdown: [
       { href: "/mcp", label: "Все MCP серверы" },
-      { href: "/mcp#russian", label: "Российские" },
+      { href: "/mcp?filter=russian", label: "Российские" },
     ],
   },
   {
@@ -29,7 +30,8 @@ const mainTabs = [
     label: "CLI",
     dropdown: [
       { href: "/tools", label: "Все инструменты" },
-      { href: "/russian-agents", label: "Российские агенты" },
+      { href: "/tools?filter=russian", label: "Российские" },
+      { href: "/russian-agents", label: "Обзор РФ агентов" },
     ],
   },
 ];

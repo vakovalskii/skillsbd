@@ -10,18 +10,20 @@ interface LeaderboardProps {
   initialSkills: Skill[];
   totalInstalls: number;
   totalTrending: number;
+  initialFilter?: string;
 }
 
 export default function Leaderboard({
   initialSkills,
   totalInstalls,
   totalTrending,
+  initialFilter = "",
 }: LeaderboardProps) {
   const router = useRouter();
   const searchRef = useRef<HTMLInputElement>(null);
   const [sortMode, setSortMode] = useState<SortMode>("all");
   const [search, setSearch] = useState("");
-  const [categoryFilter, setCategoryFilter] = useState<string>("");
+  const [categoryFilter, setCategoryFilter] = useState<string>(initialFilter);
 
   // Cmd+K or / to focus search
   useEffect(() => {

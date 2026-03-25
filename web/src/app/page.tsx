@@ -5,7 +5,8 @@ import { getSkills, getTotalInstalls, getTotalTrending } from "@/data/skills";
 
 export const dynamic = "force-dynamic";
 
-export default async function Home() {
+export default async function Home({ searchParams }: { searchParams: Promise<{ filter?: string }> }) {
+  const params = await searchParams;
   const [skills, totalInstalls, totalTrending] = await Promise.all([
     getSkills(),
     getTotalInstalls(),
@@ -25,6 +26,7 @@ export default async function Home() {
               initialSkills={skills}
               totalInstalls={totalInstalls}
               totalTrending={totalTrending}
+              initialFilter={params.filter === "russian" ? "__ru__" : ""}
             />
           </section>
         </div>

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useMemo, useEffect, useRef } from "react";
+import { useSearchParams } from "next/navigation";
 
 interface Tool {
   name: string;
@@ -238,9 +239,12 @@ const tools: Tool[] = [
 ];
 
 export default function ToolsGrid() {
+  const searchParams = useSearchParams();
   const searchRef = useRef<HTMLInputElement>(null);
   const [search, setSearch] = useState("");
-  const [activeCategory, setActiveCategory] = useState("");
+  const [activeCategory, setActiveCategory] = useState(() =>
+    searchParams.get("filter") === "russian" ? "__ru__" : ""
+  );
 
   useEffect(() => {
     function handleKey(e: KeyboardEvent) {
