@@ -2,7 +2,7 @@ import Header from "@/components/Header";
 
 export const metadata = {
   title: "О проекте",
-  description: "NeuralDeep — российский агрегатор навыков для AI-агентов. История создания и миссия.",
+  description: "NeuralDeep — российский агрегатор навыков, MCP серверов и AI-инструментов. История создания и миссия.",
 };
 
 export default function AboutPage() {
@@ -11,7 +11,7 @@ export default function AboutPage() {
       <Header />
       <main className="mx-auto w-full max-w-3xl flex-1 px-4 py-12">
         <h1 className="text-3xl font-bold mb-2">О NeuralDeep</h1>
-        <p className="text-sm text-gray-600 mb-8">Российский каталог навыков для AI-агентов</p>
+        <p className="text-sm text-gray-600 mb-8">Российский агрегатор навыков, MCP серверов и AI-инструментов</p>
 
         <div className="flex flex-col gap-8 text-gray-400 leading-relaxed">
           <section>

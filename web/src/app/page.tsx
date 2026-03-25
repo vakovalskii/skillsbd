@@ -45,7 +45,7 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ f
           <div>
             <h4 className="font-medium text-foreground mb-3">О проекте</h4>
             <ul className="space-y-2 text-gray-500">
-              <li><a href="/about" className="hover:text-foreground transition-colors">О skillsbd</a></li>
+              <li><a href="/about" className="hover:text-foreground transition-colors">О NeuralDeep</a></li>
               <li><a href="/blog" className="hover:text-foreground transition-colors">Блог</a></li>
               <li><a href="/changelog" className="hover:text-foreground transition-colors">Обновления</a></li>
             </ul>

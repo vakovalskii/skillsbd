@@ -7,8 +7,9 @@ export function generateStaticParams() {
   return mcpServers.map((s) => ({ slug: s.slug }));
 }
 
-export function generateMetadata({ params }: { params: { slug: string } }) {
-  const server = mcpServers.find((s) => s.slug === params.slug);
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const server = mcpServers.find((s) => s.slug === slug);
   if (!server) return { title: "MCP сервер не найден" };
 
   return {
@@ -22,8 +23,9 @@ export function generateMetadata({ params }: { params: { slug: string } }) {
   };
 }
 
-export default function McpServerPage({ params }: { params: { slug: string } }) {
-  const server = mcpServers.find((s) => s.slug === params.slug);
+export default async function McpServerPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const server = mcpServers.find((s) => s.slug === slug);
   if (!server) notFound();
 
   const isRu = server.category === "Российские";
@@ -47,8 +49,7 @@ export default function McpServerPage({ params }: { params: { slug: string } }) 
           <p className="text-gray-400 text-lg">{server.desc}</p>
         </div>
 
-        {/* Info */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-8">
           <div className="rounded-lg border border-gray-800 bg-gray-900 p-4 transition-all duration-200 hover:border-gray-700 hover-glow">
             <p className="text-sm font-medium">{server.author}</p>
             <p className="text-xs text-gray-500 mt-1">автор</p>
@@ -63,13 +64,8 @@ export default function McpServerPage({ params }: { params: { slug: string } }) 
               <p className="text-xs text-gray-500 mt-1">GitHub звёзд</p>
             </div>
           )}
-          <div className="rounded-lg border border-gray-800 bg-gray-900 p-4 transition-all duration-200 hover:border-gray-700 hover-glow">
-            <p className="text-sm">{server.category}</p>
-            <p className="text-xs text-gray-500 mt-1">категория</p>
-          </div>
         </div>
 
-        {/* Install */}
         <div className="mb-8">
           <h2 className="text-lg font-semibold mb-3">Подключение</h2>
           <div className="rounded-lg border border-gray-800 bg-gray-900 px-4 py-3 font-mono text-sm overflow-x-auto whitespace-nowrap">
@@ -77,22 +73,17 @@ export default function McpServerPage({ params }: { params: { slug: string } }) 
           </div>
         </div>
 
-        {/* Tags */}
         <div className="mb-8">
           <h2 className="text-lg font-semibold mb-3">Теги</h2>
           <div className="flex flex-wrap gap-2">
             {server.tags.map((tag) => (
-              <span
-                key={tag}
-                className="rounded-md border border-gray-800 bg-gray-900 px-2.5 py-1 text-xs text-gray-400"
-              >
+              <span key={tag} className="rounded-md border border-gray-800 bg-gray-900 px-2.5 py-1 text-xs text-gray-400">
                 {tag}
               </span>
             ))}
           </div>
         </div>
 
-        {/* Source */}
         <div className="flex gap-3">
           <a
             href={server.url}
