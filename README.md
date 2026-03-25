@@ -1,6 +1,6 @@
-# skillsБД
+# NeuralDeep
 
-Российский каталог навыков для AI-агентов. [skillsbd.ru](https://skillsbd.ru)
+Российский агрегатор навыков, MCP серверов и AI-инструментов. [neuraldeep.ru](https://neuraldeep.ru)
 ![photo_2026-03-24_11-02-55](https://github.com/user-attachments/assets/5256fc1f-27bd-485c-8215-0322097e8e22)
 
 Навыки для работы с Яндекс, Битрикс, 1С и другими российскими сервисами. Устанавливайте одной командой, делитесь с RU-комьюнити.
@@ -59,7 +59,7 @@ npx skillsbd remove yandex-wordstat
 
 ```bash
 # 1. Клонируйте репо
-git clone https://github.com/vakovalskii/skillsbd.git
+git clone https://github.com/vakovalskii/neuraldeep.git
 cd skillsbd
 
 # 2. Создайте .env из примера
@@ -131,16 +131,16 @@ skillsbd/
 
 ```bash
 # Все навыки
-curl https://skillsbd.ru/api/skills
+curl https://neuraldeep.ru/api/skills
 
 # Поиск
-curl https://skillsbd.ru/api/skills?q=яндекс
+curl https://neuraldeep.ru/api/skills?q=яндекс
 
 # Тренды
-curl https://skillsbd.ru/api/skills?sort=trending
+curl https://neuraldeep.ru/api/skills?sort=trending
 ```
 
-[Полная документация API →](https://skillsbd.ru/docs/api)
+[Полная документация API →](https://neuraldeep.ru/docs/api)
 
 ## Для компаний: своя библиотека навыков
 
@@ -241,7 +241,7 @@ jobs:
 ### Как добавить навык в каталог
 
 1. Создайте GitHub-репозиторий с файлом `SKILL.md`
-2. Зайдите на [skillsbd.ru/submit](https://skillsbd.ru/submit)
+2. Зайдите на [neuraldeep.ru/submit](https://neuraldeep.ru/submit)
 3. Заполните форму — навык попадёт на модерацию
 
 ## Лицензия

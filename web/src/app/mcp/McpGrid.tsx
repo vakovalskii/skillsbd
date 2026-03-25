@@ -18,6 +18,28 @@ interface McpServer {
 const servers: McpServer[] = [
   // === Российские ===
   {
+    name: "ВкусВилл MCP",
+    desc: "Поиск товаров, цены, состав, КБЖУ, скидки, магазины, ссылка на корзину. Первый продуктовый MCP в России.",
+    author: "ВкусВилл",
+    stars: 0,
+    license: "—",
+    url: "https://mcp001.vkusvill.ru/mcp",
+    install: "MCP endpoint: https://mcp001.vkusvill.ru/mcp",
+    category: "Российские",
+    tags: ["вкусвилл", "продукты", "еда", "корзина", "магазины"],
+  },
+  {
+    name: "Додо Пицца (концепт)",
+    desc: "AI-агент заказывает пиццу: меню, корзина, оплата, самовывоз. Полный цикл от выбора до заказа через CLI.",
+    author: "leviva23",
+    stars: 0,
+    license: "Closed",
+    url: "https://habr.com/ru/articles/897020/",
+    install: "Код закрыт (см. статью на Хабре)",
+    category: "Российские",
+    tags: ["додо", "пицца", "еда", "заказ", "puppeteer"],
+  },
+  {
     name: "Yandex Tracker MCP",
     desc: "MCP сервер для Yandex Tracker API. Задачи, проекты, спринты — управление через AI-агента.",
     author: "sunnyyssh",
