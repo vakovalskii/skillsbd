@@ -43,8 +43,10 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const skill = await findSkill(slug);
   if (!skill) return { title: "Навык не найден" };
 
-  const title = `${skill.name} — навык для AI-агентов | skillsbd`;
-  const description = `${skill.description}. Автор: ${skill.authorName || skill.owner}. ★${skill.githubStars} | ${skill.installs} установок.`;
+  const isRu = skill.tags.some((t: string) => ["яндекс", "1с", "1c", "битрикс24", "gigachat", "сбер", "российские сервисы"].includes(t.toLowerCase()));
+  const ruLabel = isRu ? " 🇷🇺" : "";
+  const title = `${skill.name}${ruLabel} — навык для AI-агентов | NeuralDeep`;
+  const description = `${skill.description}. Автор: ${skill.authorName || skill.owner}. ★${skill.githubStars} | ${skill.installs} установок. Установить: npx skillsbd add ${skill.owner}/${skill.repo}/${skill.name}`;
 
   return {
     title,

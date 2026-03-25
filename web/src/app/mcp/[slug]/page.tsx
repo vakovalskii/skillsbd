@@ -12,13 +12,24 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const server = mcpServers.find((s) => s.slug === slug);
   if (!server) return { title: "MCP сервер не найден" };
 
+  const isRu = server.category === "Российские";
+  const ruLabel = isRu ? " 🇷🇺" : "";
+  const title = `${server.name}${ruLabel} — MCP сервер для AI-агентов | NeuralDeep`;
+  const description = `${server.desc}. Автор: ${server.author}. ${server.stars > 0 ? `★${server.stars}` : ""} Подключение: ${server.install}`;
+
   return {
-    title: `${server.name} — MCP сервер для AI-агентов`,
-    description: `${server.desc}. Автор: ${server.author}. Установка: ${server.install}`,
+    title,
+    description,
     openGraph: {
-      title: `${server.name} — MCP сервер`,
+      title,
       description: server.desc,
       url: `https://neuraldeep.ru/mcp/${server.slug}`,
+      type: "article",
+    },
+    twitter: {
+      card: "summary",
+      title,
+      description: server.desc,
     },
   };
 }
