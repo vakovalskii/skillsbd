@@ -1,5 +1,6 @@
 import { prisma } from "@/lib/db";
 import type { MetadataRoute } from "next";
+import { mcpServers } from "@/data/mcp-servers";
 
 export const dynamic = "force-dynamic";
 
@@ -34,5 +35,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.8,
   }));
 
-  return [...staticPages, ...skillPages];
+  const mcpPages = mcpServers.map((s) => ({
+    url: `${baseUrl}/mcp/${s.slug}`,
+    changeFrequency: "weekly" as const,
+    priority: 0.8,
+  }));
+
+  return [...staticPages, ...skillPages, ...mcpPages];
 }
