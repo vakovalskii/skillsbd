@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import Providers from "@/components/Providers";
+import YandexMetrika from "@/components/YandexMetrika";
+import { Suspense } from "react";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -79,8 +81,15 @@ export default function RootLayout({
     <html
       lang="ru"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased dark`}
+      suppressHydrationWarning
     >
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: `
+          try { const t = localStorage.getItem('theme'); if (t) { document.documentElement.classList.remove('dark','light'); document.documentElement.classList.add(t); } } catch {}
+        ` }} />
+      </head>
       <body className="min-h-full flex flex-col bg-background text-foreground">
+        <Suspense><YandexMetrika /></Suspense>
         <Providers>{children}</Providers>
       </body>
     </html>

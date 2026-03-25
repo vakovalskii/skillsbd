@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import AuthButton from "./AuthButton";
+import ThemeToggle from "./ThemeToggle";
 
 const mainTabs = [
   {
@@ -165,6 +166,7 @@ export default function Header() {
             )}
           </div>
 
+          <ThemeToggle />
           <AuthButton />
         </div>
 

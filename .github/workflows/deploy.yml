@@ -62,6 +62,8 @@ jobs:
           context: ./web
           push: true
           tags: ${{ steps.meta.outputs.tags }}
+          build-args: |
+            NEXT_PUBLIC_METRIKA_ID=${{ secrets.METRIKA_ID }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
 

@@ -5,6 +5,8 @@ RUN npm ci
 
 FROM node:20-alpine AS builder
 WORKDIR /app
+ARG NEXT_PUBLIC_METRIKA_ID
+ENV NEXT_PUBLIC_METRIKA_ID=$NEXT_PUBLIC_METRIKA_ID
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 RUN npx prisma generate
