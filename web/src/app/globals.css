@@ -26,16 +26,9 @@
   --accent: #2563eb;
 }
 
+/* :root defaults to dark */
 :root {
-  --background: #0a0a0a;
-  --foreground: #ededed;
-  --gray-400: #a1a1aa;
-  --gray-500: #71717a;
-  --gray-600: #52525b;
-  --gray-700: #3f3f46;
-  --gray-800: #27272a;
-  --gray-900: #18181b;
-  --accent: #3b82f6;
+  color-scheme: dark;
 }
 
 @theme inline {

@@ -19,14 +19,14 @@ const servers: McpServer[] = [
   // === Российские ===
   {
     name: "ВкусВилл MCP",
-    desc: "Поиск товаров, цены, состав, КБЖУ, скидки, магазины, ссылка на корзину. Первый продуктовый MCP в России.",
-    author: "ВкусВилл",
+    desc: "Первый в российском e-commerce открытый MCP сервер. 6 инструментов: поиск товаров, детали (КБЖУ/состав), корзина, магазины, аналоги, скидки. Разработан совместно с red_mad_robot.",
+    author: "ВкусВилл + red_mad_robot",
     stars: 0,
-    license: "—",
-    url: "https://mcp001.vkusvill.ru/mcp",
+    license: "Open",
+    url: "https://habr.com/ru/companies/vkusvill/articles/981866/",
     install: "MCP endpoint: https://mcp001.vkusvill.ru/mcp",
     category: "Российские",
-    tags: ["вкусвилл", "продукты", "еда", "корзина", "магазины"],
+    tags: ["вкусвилл", "продукты", "еда", "корзина", "e-commerce", "магазины"],
   },
   {
     name: "Додо Пицца (концепт)",
