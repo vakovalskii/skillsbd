@@ -3,9 +3,19 @@ import McpGrid from "./McpGrid";
 import { Suspense } from "react";
 
 export const metadata = {
-  title: "MCP серверы для AI-агентов",
+  title: "MCP серверы для AI-агентов | NeuralDeep",
   description:
-    "Open source MCP серверы: подключите AI-агента к базам данных, API, файловым системам и внешним сервисам через Model Context Protocol.",
+    "Каталог MCP серверов: ВкусВилл, Яндекс Tracker, GigaChat, Kubernetes, Docker, PostgreSQL и другие. Подключите AI-агента к данным через Model Context Protocol.",
+  openGraph: {
+    title: "MCP серверы — NeuralDeep",
+    description: "Каталог MCP серверов для AI-агентов. Российские и глобальные серверы.",
+    url: "https://neuraldeep.ru/mcp",
+  },
+  twitter: {
+    card: "summary" as const,
+    title: "MCP серверы — NeuralDeep",
+    description: "Каталог MCP серверов для AI-агентов",
+  },
   keywords: [
     "mcp server",
     "model context protocol",
