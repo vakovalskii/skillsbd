@@ -1,11 +1,11 @@
 #!/usr/bin/env node
 
 import { execSync } from "child_process";
-import { existsSync, mkdirSync, writeFileSync, readFileSync } from "fs";
+import { existsSync, mkdirSync, writeFileSync, readFileSync, readdirSync } from "fs";
 import { join, resolve } from "path";
 import { get } from "https";
 
-const VERSION = "0.5.0";
+const VERSION = "0.5.1";
 const API_URL = "https://neuraldeep.ru/api/skills";
 const INSTALL_URL = "https://neuraldeep.ru/api/skills/install";
 
@@ -93,15 +93,20 @@ function cloneSkill(ownerRepo, skillName) {
   }
 
   if (!skillsPath) {
-    // Try root-level SKILL.md
+    // Try root-level SKILL.md — copy entire repo (excluding .git)
     const rootSkill = join(tempDir, "SKILL.md");
     if (existsSync(rootSkill)) {
-      const destDir = join(skillsDir, repo);
+      const destDir = join(skillsDir, skill || repo);
       mkdirSync(destDir, { recursive: true });
-      const content = readFileSync(rootSkill, "utf-8");
-      writeFileSync(join(destDir, "SKILL.md"), content);
-      success(`Установлен навык: ${repo}`);
-      trackInstall(repo, owner, repo);
+      // Copy all files except .git directory
+      const items = readdirSync(tempDir).filter((f) => f !== ".git");
+      for (const item of items) {
+        const src = join(tempDir, item);
+        const dst = join(destDir, item);
+        execSync(`cp -r "${src}" "${dst}"`);
+      }
+      success(`Установлен навык: ${skill || repo}`);
+      trackInstall(skill || repo, owner, repo);
     } else {
       error("Навыки не найдены (нет skills/, plugins/, .claude/skills/ или SKILL.md)");
     }
