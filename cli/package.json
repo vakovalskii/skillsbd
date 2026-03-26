@@ -1,6 +1,6 @@
 {
   "name": "skillsbd",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "CLI для установки навыков AI-агентов из каталога skillsbd",
   "bin": {
     "skillsbd": "./src/index.js"
@@ -25,7 +25,7 @@
     "type": "git",
     "url": "https://github.com/vakovalskii/neuraldeep"
   },
-  "homepage": "https://skillsbd.ru",
+  "homepage": "https://neuraldeep.ru",
   "license": "MIT",
   "engines": {
     "node": ">=18"

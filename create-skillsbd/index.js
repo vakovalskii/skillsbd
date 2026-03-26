@@ -15,7 +15,7 @@ if (!projectName || projectName === "--help" || projectName === "-h") {
   npx create-skillsbd <название>     Создать библиотеку навыков
   npx create-skillsbd my-skills      Пример
 
-  Подробнее: https://skillsbd.ru/docs
+  Подробнее: https://neuraldeep.ru/docs
 `);
   process.exit(0);
 }
@@ -140,7 +140,7 @@ npm publish --access public
 npm publish --registry=https://npm.pkg.github.com
 \`\`\`
 
-Сгенерировано с [create-skillsbd](https://skillsbd.ru).
+Сгенерировано с [create-skillsbd](https://neuraldeep.ru).
 `);
 
 // .gitignore

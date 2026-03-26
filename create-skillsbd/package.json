@@ -1,6 +1,6 @@
 {
   "name": "create-skillsbd",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Генератор корпоративных skill-библиотек для AI-агентов",
   "bin": {
     "create-skillsbd": "./index.js"
@@ -21,7 +21,7 @@
     "type": "git",
     "url": "https://github.com/vakovalskii/neuraldeep"
   },
-  "homepage": "https://skillsbd.ru",
+  "homepage": "https://neuraldeep.ru",
   "license": "MIT",
   "engines": {
     "node": ">=18"

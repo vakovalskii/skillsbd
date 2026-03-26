@@ -5,9 +5,9 @@ import { existsSync, mkdirSync, writeFileSync, readFileSync } from "fs";
 import { join, resolve } from "path";
 import { get } from "https";
 
-const VERSION = "0.4.0";
-const API_URL = "https://skillsbd.ru/api/skills";
-const INSTALL_URL = "https://skillsbd.ru/api/skills/install";
+const VERSION = "0.5.0";
+const API_URL = "https://neuraldeep.ru/api/skills";
+const INSTALL_URL = "https://neuraldeep.ru/api/skills/install";
 
 const HELP = `
   skillsbd - CLI для установки навыков AI-агентов
@@ -28,7 +28,7 @@ const HELP = `
     npx skillsbd search яндекс
     npx skillsbd list
 
-  Каталог: https://skillsbd.ru
+  Каталог: https://neuraldeep.ru
 `;
 
 const AGENTS_DIR = ".skills";
@@ -256,7 +256,7 @@ async function searchSkills(query) {
 
     if (!results || results.length === 0) {
       log("Ничего не найдено. Попробуйте другой запрос.");
-      log(`Каталог: https://skillsbd.ru`);
+      log(`Каталог: https://neuraldeep.ru`);
       return;
     }
 
@@ -270,7 +270,7 @@ async function searchSkills(query) {
     log(`Установка: npx skillsbd add <owner/repo>`);
   } catch {
     log("Не удалось подключиться к каталогу. Проверьте подключение к сети.");
-    log(`Каталог: https://skillsbd.ru`);
+    log(`Каталог: https://neuraldeep.ru`);
   }
 }
 
