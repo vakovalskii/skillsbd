@@ -26,14 +26,21 @@ export async function DELETE(request: NextRequest) {
 export async function PATCH(request: NextRequest) {
   if (!(await isAdmin())) return NextResponse.json({ error: "Forbidden" }, { status: 403 });
 
-  const { skillId, featured } = await request.json();
-  if (!skillId || typeof featured !== "boolean") {
-    return NextResponse.json({ error: "skillId and featured required" }, { status: 400 });
+  const body = await request.json();
+  const { skillId } = body;
+  if (!skillId) return NextResponse.json({ error: "skillId required" }, { status: 400 });
+
+  const data: Record<string, unknown> = {};
+  if (typeof body.featured === "boolean") data.featured = body.featured;
+  if (body.type === "skill" || body.type === "mcp") data.type = body.type;
+
+  if (Object.keys(data).length === 0) {
+    return NextResponse.json({ error: "No valid fields to update" }, { status: 400 });
   }
 
   const skill = await prisma.skill.update({
     where: { id: skillId },
-    data: { featured },
+    data,
   });
 
   return NextResponse.json(skill);
