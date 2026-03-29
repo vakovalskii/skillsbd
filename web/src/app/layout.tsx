@@ -3,6 +3,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import Providers from "@/components/Providers";
 import YandexMetrika from "@/components/YandexMetrika";
 import AgentChat from "@/components/AgentChat";
+import Footer from "@/components/Footer";
+import CookieConsent from "@/components/CookieConsent";
 import { Suspense } from "react";
 import "./globals.css";
 
@@ -93,7 +95,9 @@ export default function RootLayout({
         <Suspense><YandexMetrika /></Suspense>
         <Providers>
           {children}
+          <Footer />
           <AgentChat />
+          <CookieConsent />
         </Providers>
       </body>
     </html>

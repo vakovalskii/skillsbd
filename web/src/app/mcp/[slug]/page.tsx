@@ -1,4 +1,5 @@
 import Header from "@/components/Header";
+import Comments from "@/components/Comments";
 import { mcpServers, type McpServer } from "@/data/mcp-servers";
 import { prisma } from "@/lib/db";
 import { toSlug } from "@/data/skills";
@@ -7,7 +8,11 @@ import Link from "next/link";
 
 export const dynamic = "force-dynamic";
 
-async function findMcpServer(slug: string): Promise<McpServer | null> {
+interface McpServerWithId extends McpServer {
+  dbId?: string;
+}
+
+async function findMcpServer(slug: string): Promise<McpServerWithId | null> {
   // 1. Static servers
   const staticServer = mcpServers.find((s) => s.slug === slug);
   if (staticServer) return staticServer;
@@ -29,6 +34,7 @@ async function findMcpServer(slug: string): Promise<McpServer | null> {
       install: `npx skillsbd add ${dbItem.owner}/${dbItem.repo}/${dbItem.name}`,
       category: dbItem.category,
       tags: dbItem.tags,
+      dbId: dbItem.id,
     };
   }
 
@@ -123,7 +129,7 @@ export default async function McpServerPage({ params }: { params: Promise<{ slug
           </div>
         </div>
 
-        <div className="flex gap-3">
+        <div className="flex gap-3 mb-10">
           <a
             href={server.url}
             target="_blank"
@@ -139,6 +145,8 @@ export default async function McpServerPage({ params }: { params: Promise<{ slug
             ← Все MCP серверы
           </Link>
         </div>
+
+        {server.dbId && <Comments skillId={server.dbId} />}
       </main>
     </>
   );

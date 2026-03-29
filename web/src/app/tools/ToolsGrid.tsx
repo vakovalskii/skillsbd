@@ -242,6 +242,7 @@ export default function ToolsGrid() {
   const searchParams = useSearchParams();
   const searchRef = useRef<HTMLInputElement>(null);
   const [search, setSearch] = useState("");
+  const [sortMode, setSortMode] = useState<"default" | "stars" | "newest">("default");
   const [activeCategory, setActiveCategory] = useState(() =>
     searchParams.get("filter") === "russian" ? "__ru__" : ""
   );
@@ -265,7 +266,7 @@ export default function ToolsGrid() {
   const ruCount = tools.filter((t) => t.ru).length;
 
   const filtered = useMemo(() => {
-    let list = tools;
+    let list = [...tools];
     if (activeCategory === "__ru__") {
       list = list.filter((t) => t.ru);
     } else if (activeCategory) {
@@ -281,8 +282,16 @@ export default function ToolsGrid() {
           t.tags.some((tag) => tag.toLowerCase().includes(q))
       );
     }
+    switch (sortMode) {
+      case "stars":
+        list.sort((a, b) => b.stars - a.stars);
+        break;
+      case "newest":
+        list.reverse();
+        break;
+    }
     return list;
-  }, [search, activeCategory]);
+  }, [search, activeCategory, sortMode]);
 
   return (
     <div className="flex flex-col gap-5">
@@ -341,6 +350,27 @@ export default function ToolsGrid() {
             </button>
           );
         })}
+      </div>
+
+      {/* Sort tabs */}
+      <div className="flex gap-1 border-b border-gray-800 overflow-x-auto">
+        {([
+          { key: "default" as const, label: "По умолчанию" },
+          { key: "stars" as const, label: "★ Звёзды" },
+          { key: "newest" as const, label: "Новые" },
+        ]).map((tab) => (
+          <button
+            key={tab.key}
+            onClick={() => setSortMode(tab.key)}
+            className={`shrink-0 px-3 py-2 text-sm transition-colors border-b-2 ${
+              sortMode === tab.key
+                ? "border-accent text-foreground"
+                : "border-transparent text-gray-500 hover:text-gray-400"
+            }`}
+          >
+            {tab.label}
+          </button>
+        ))}
       </div>
 
       {/* Grid */}

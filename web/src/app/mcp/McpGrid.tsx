@@ -2,13 +2,15 @@
 
 import { useState, useMemo, useEffect, useRef } from "react";
 import { useSearchParams } from "next/navigation";
-import Link from "next/link";
 import type { McpServer } from "@/data/mcp-servers";
+
+type SortMode = "default" | "stars" | "newest";
 
 export default function McpGrid({ servers }: { servers: McpServer[] }) {
   const searchParams = useSearchParams();
   const searchRef = useRef<HTMLInputElement>(null);
   const [search, setSearch] = useState("");
+  const [sortMode, setSortMode] = useState<SortMode>("default");
   const [activeCategory, setActiveCategory] = useState(() =>
     searchParams.get("filter") === "russian" ? "Российские" : ""
   );
@@ -27,10 +29,10 @@ export default function McpGrid({ servers }: { servers: McpServer[] }) {
   const categories = useMemo(() => {
     const cats = new Set(servers.map((s) => s.category));
     return Array.from(cats).sort();
-  }, []);
+  }, [servers]);
 
   const filtered = useMemo(() => {
-    let list = servers;
+    let list = [...servers];
     if (activeCategory) list = list.filter((s) => s.category === activeCategory);
     if (search) {
       const q = search.toLowerCase();
@@ -41,8 +43,16 @@ export default function McpGrid({ servers }: { servers: McpServer[] }) {
           s.tags.some((t) => t.toLowerCase().includes(q))
       );
     }
+    switch (sortMode) {
+      case "stars":
+        list.sort((a, b) => b.stars - a.stars);
+        break;
+      case "newest":
+        list.reverse();
+        break;
+    }
     return list;
-  }, [search, activeCategory]);
+  }, [search, activeCategory, sortMode, servers]);
 
   return (
     <div className="flex flex-col gap-5">
@@ -90,13 +100,32 @@ export default function McpGrid({ servers }: { servers: McpServer[] }) {
         })}
       </div>
 
+      {/* Sort tabs */}
+      <div className="flex gap-1 border-b border-gray-800 overflow-x-auto">
+        {([
+          { key: "default" as const, label: "По умолчанию" },
+          { key: "stars" as const, label: "★ Звёзды" },
+          { key: "newest" as const, label: "Новые" },
+        ]).map((tab) => (
+          <button
+            key={tab.key}
+            onClick={() => setSortMode(tab.key)}
+            className={`shrink-0 px-3 py-2 text-sm transition-colors border-b-2 ${
+              sortMode === tab.key
+                ? "border-accent text-foreground"
+                : "border-transparent text-gray-500 hover:text-gray-400"
+            }`}
+          >
+            {tab.label}
+          </button>
+        ))}
+      </div>
+
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 stagger-children">
         {filtered.map((server) => (
           <a
             key={server.name}
             href={`/mcp/${server.slug}`}
-            
-            
             className="flex flex-col rounded-lg border border-gray-800 bg-gray-900 p-4 hover:border-gray-700 hover-glow card-shine transition-all group"
           >
             <div className="flex items-center gap-2 mb-2 flex-wrap">
