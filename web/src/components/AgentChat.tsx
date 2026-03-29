@@ -182,11 +182,32 @@ export default function AgentChat() {
                           a: ({ href, children }) => (
                             <a href={href} className="text-accent hover:underline" target="_blank" rel="noopener noreferrer">{children}</a>
                           ),
-                          code: ({ children }) => (
-                            <code className="text-accent bg-gray-950 px-1 py-0.5 rounded text-xs">{children}</code>
+                          pre: ({ children }) => (
+                            <pre className="bg-gray-950 border border-gray-800 rounded-md p-2 my-1.5 overflow-x-auto text-xs">{children}</pre>
                           ),
+                          code: ({ className, children }) => {
+                            const isBlock = className?.includes("language-");
+                            return isBlock ? (
+                              <code className="text-accent text-xs">{children}</code>
+                            ) : (
+                              <code className="text-accent bg-gray-950 px-1 py-0.5 rounded text-xs">{children}</code>
+                            );
+                          },
                           ul: ({ children }) => <ul className="list-disc list-inside mb-1.5 space-y-0.5">{children}</ul>,
+                          ol: ({ children }) => <ol className="list-decimal list-inside mb-1.5 space-y-0.5">{children}</ol>,
+                          li: ({ children }) => <li className="text-sm">{children}</li>,
+                          h1: ({ children }) => <h1 className="text-base font-bold mb-1 text-foreground">{children}</h1>,
+                          h2: ({ children }) => <h2 className="text-sm font-bold mb-1 text-foreground">{children}</h2>,
+                          h3: ({ children }) => <h3 className="text-sm font-semibold mb-1 text-foreground">{children}</h3>,
                           strong: ({ children }) => <strong className="text-foreground">{children}</strong>,
+                          blockquote: ({ children }) => (
+                            <blockquote className="border-l-2 border-gray-700 pl-2 my-1.5 text-gray-400 italic">{children}</blockquote>
+                          ),
+                          table: ({ children }) => (
+                            <div className="overflow-x-auto my-1.5"><table className="text-xs border-collapse">{children}</table></div>
+                          ),
+                          th: ({ children }) => <th className="border border-gray-800 px-2 py-1 text-left font-medium">{children}</th>,
+                          td: ({ children }) => <td className="border border-gray-800 px-2 py-1">{children}</td>,
                         }}
                       >
                         {msg.content}
