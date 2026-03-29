@@ -77,7 +77,7 @@ export default function Leaderboard({
         list.sort((a, b) => b.githubStars - a.githubStars);
         break;
       case "new":
-        list.reverse();
+        list.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
         break;
       default:
         list.sort((a, b) => b.installs - a.installs);
@@ -174,7 +174,7 @@ export default function Leaderboard({
           <span>#</span>
           <span>Навык</span>
           <span className="text-right">★</span>
-          <span className="text-right">↓</span>
+          <span className="text-right">{sortMode === "new" ? "Дата" : "↓"}</span>
         </div>
 
         {filtered.map((skill, i) => (
@@ -226,6 +226,8 @@ export default function Leaderboard({
             <span className="text-sm text-gray-400 text-right font-mono">
               {sortMode === "trending"
                 ? `+${formatInstalls(skill.trending24h)}`
+                : sortMode === "new"
+                ? new Date(skill.createdAt).toLocaleDateString("ru-RU", { day: "numeric", month: "short" })
                 : formatInstalls(skill.installs)}
             </span>
           </div>

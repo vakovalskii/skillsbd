@@ -14,6 +14,7 @@ export interface Skill {
   telegramLink: string | null;
   featured: boolean;
   githubStars: number;
+  createdAt: string;
   _count?: { comments: number };
 }
 
