@@ -59,14 +59,21 @@ export default function Leaderboard({
     }
 
     if (search) {
-      const q = search.toLowerCase();
-      list = list.filter(
-        (s) =>
-          s.name.toLowerCase().includes(q) ||
-          s.description.toLowerCase().includes(q) ||
-          s.owner.toLowerCase().includes(q) ||
-          s.tags.some((t) => t.toLowerCase().includes(q))
-      );
+      const q = search.toLowerCase().trim();
+      const words = q.split(/\s+/).filter(Boolean);
+      list = list.filter((s) => {
+        const haystack = [
+          s.name,
+          s.name.replace(/-/g, " "),
+          s.description,
+          s.owner,
+          s.authorName || "",
+          ...s.tags,
+        ]
+          .join(" ")
+          .toLowerCase();
+        return words.every((w) => haystack.includes(w));
+      });
     }
 
     switch (sortMode) {

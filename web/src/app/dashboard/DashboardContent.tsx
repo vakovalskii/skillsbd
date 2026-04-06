@@ -23,6 +23,8 @@ interface Skill {
 type EditingSkill = {
   id: string;
   name: string;
+  owner: string;
+  repo: string;
   description: string;
   category: string;
   tags: string;
@@ -51,6 +53,8 @@ export default function DashboardContent() {
     setEditing({
       id: skill.id,
       name: skill.name,
+      owner: skill.owner,
+      repo: skill.repo,
       description: skill.description,
       category: skill.category,
       tags: skill.tags.join(", "),
@@ -70,6 +74,8 @@ export default function DashboardContent() {
         body: JSON.stringify({
           skillId: editing.id,
           name: editing.name,
+          owner: editing.owner,
+          repo: editing.repo,
           description: editing.description,
           category: editing.category,
           tags: editing.tags
@@ -157,6 +163,24 @@ export default function DashboardContent() {
                     value={editing.category}
                     onChange={(e) => setEditing({ ...editing, category: e.target.value })}
                     className="w-full rounded-md border border-gray-700 bg-gray-950 px-3 py-2 text-sm outline-none focus:border-gray-500"
+                  />
+                </div>
+              </div>
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="text-xs text-gray-500 mb-1 block">GitHub Owner</label>
+                  <input
+                    value={editing.owner}
+                    onChange={(e) => setEditing({ ...editing, owner: e.target.value })}
+                    className="w-full rounded-md border border-gray-700 bg-gray-950 px-3 py-2 text-sm font-mono outline-none focus:border-gray-500"
+                  />
+                </div>
+                <div>
+                  <label className="text-xs text-gray-500 mb-1 block">GitHub Repo</label>
+                  <input
+                    value={editing.repo}
+                    onChange={(e) => setEditing({ ...editing, repo: e.target.value })}
+                    className="w-full rounded-md border border-gray-700 bg-gray-950 px-3 py-2 text-sm font-mono outline-none focus:border-gray-500"
                   />
                 </div>
               </div>

@@ -24,7 +24,7 @@ export async function PATCH(request: NextRequest) {
     return NextResponse.json({ error: "unauthorized" }, { status: 401 });
   }
 
-  const { skillId, name, description, category, tags, authorName, telegramLink } =
+  const { skillId, name, description, category, tags, authorName, telegramLink, owner, repo } =
     await request.json();
 
   if (!skillId) {
@@ -47,6 +47,8 @@ export async function PATCH(request: NextRequest) {
   if (tags !== undefined) data.tags = Array.isArray(tags) ? tags : [];
   if (authorName !== undefined) data.authorName = authorName.trim() || null;
   if (telegramLink !== undefined) data.telegramLink = telegramLink.trim() || null;
+  if (owner !== undefined) data.owner = owner.trim();
+  if (repo !== undefined) data.repo = repo.trim();
 
   if (Object.keys(data).length === 0) {
     return NextResponse.json({ error: "nothing to update" }, { status: 400 });

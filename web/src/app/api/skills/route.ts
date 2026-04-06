@@ -7,28 +7,57 @@ export async function GET(request: NextRequest) {
   const q = searchParams.get("q") || "";
 
   const type = searchParams.get("type") || "skill";
-  const baseWhere = { status: "approved" as const, type };
 
-  const where = q
-    ? {
-        AND: [
-          baseWhere,
-          {
-            OR: [
-              { name: { contains: q, mode: "insensitive" as const } },
-              { description: { contains: q, mode: "insensitive" as const } },
-              { owner: { contains: q, mode: "insensitive" as const } },
-            ],
-          },
-        ],
-      }
-    : baseWhere;
+  if (q) {
+    // Smart search: trigram similarity + tags array + description FTS
+    const results = await prisma.$queryRawUnsafe(
+      `
+      SELECT s.*,
+        GREATEST(
+          similarity(s.name, $1),
+          similarity(s.description, $1),
+          similarity(s.owner, $1),
+          similarity(s."authorName", $1)
+        ) AS sim,
+        (s.name ILIKE '%' || $1 || '%')::int * 0.5 +
+        (s.description ILIKE '%' || $1 || '%')::int * 0.3 +
+        (s.owner ILIKE '%' || $1 || '%')::int * 0.2 +
+        (EXISTS (SELECT 1 FROM unnest(s.tags) t WHERE t ILIKE '%' || $1 || '%'))::int * 0.4
+        AS bonus
+      FROM "Skill" s
+      WHERE s.status = 'approved'
+        AND s.type = $2
+        AND (
+          s.name ILIKE '%' || $1 || '%'
+          OR s.description ILIKE '%' || $1 || '%'
+          OR s.owner ILIKE '%' || $1 || '%'
+          OR s."authorName" ILIKE '%' || $1 || '%'
+          OR EXISTS (SELECT 1 FROM unnest(s.tags) t WHERE t ILIKE '%' || $1 || '%')
+          OR similarity(s.name, $1) > 0.15
+          OR similarity(s.description, $1) > 0.15
+        )
+      ORDER BY (sim + bonus) DESC, s.installs DESC
+      LIMIT 100
+      `,
+      q,
+      type
+    );
+
+    return NextResponse.json(results);
+  }
+
+  // No search query — standard listing
+  const baseWhere = { status: "approved" as const, type };
 
   const orderBy =
     sort === "trending"
       ? { trending24h: "desc" as const }
+      : sort === "stars"
+      ? { githubStars: "desc" as const }
+      : sort === "new"
+      ? { createdAt: "desc" as const }
       : { installs: "desc" as const };
 
-  const skills = await prisma.skill.findMany({ where, orderBy, take: 100 });
+  const skills = await prisma.skill.findMany({ where: baseWhere, orderBy, take: 100 });
   return NextResponse.json(skills);
 }
