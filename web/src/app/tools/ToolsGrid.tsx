@@ -238,7 +238,7 @@ const tools: Tool[] = [
   },
 ];
 
-export default function ToolsGrid() {
+export default function ToolsGrid({ dbTools = [] }: { dbTools?: Tool[] }) {
   const searchParams = useSearchParams();
   const searchRef = useRef<HTMLInputElement>(null);
   const [search, setSearch] = useState("");
@@ -259,14 +259,24 @@ export default function ToolsGrid() {
   }, []);
 
   const categories = useMemo(() => {
-    const cats = new Set(tools.map((t) => t.category));
+    const cats = new Set(allTools.map((t) => t.category));
     return Array.from(cats).sort();
-  }, []);
+  }, [allTools]);
 
-  const ruCount = tools.filter((t) => t.ru).length;
+  // Merge static + DB tools, DB takes priority by name
+  const allTools = useMemo(() => {
+    const staticNames = new Set(tools.map((t) => t.name));
+    const merged = [...tools];
+    for (const dt of dbTools) {
+      if (!staticNames.has(dt.name)) merged.push(dt);
+    }
+    return merged;
+  }, [dbTools]);
+
+  const ruCount = allTools.filter((t) => t.ru).length;
 
   const filtered = useMemo(() => {
-    let list = [...tools];
+    let list = [...allTools];
     if (activeCategory === "__ru__") {
       list = list.filter((t) => t.ru);
     } else if (activeCategory) {
@@ -291,7 +301,7 @@ export default function ToolsGrid() {
         break;
     }
     return list;
-  }, [search, activeCategory, sortMode]);
+  }, [search, activeCategory, sortMode, allTools]);
 
   return (
     <div className="flex flex-col gap-5">
@@ -320,7 +330,7 @@ export default function ToolsGrid() {
               : "border border-gray-800 text-gray-500 hover:text-gray-400"
           }`}
         >
-          Все ({tools.length})
+          Все ({allTools.length})
         </button>
         {ruCount > 0 && (
           <button
@@ -335,7 +345,7 @@ export default function ToolsGrid() {
           </button>
         )}
         {categories.map((cat) => {
-          const count = tools.filter((t) => t.category === cat).length;
+          const count = allTools.filter((t) => t.category === cat).length;
           return (
             <button
               key={cat}
