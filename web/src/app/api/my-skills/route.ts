@@ -24,8 +24,18 @@ export async function PATCH(request: NextRequest) {
     return NextResponse.json({ error: "unauthorized" }, { status: 401 });
   }
 
-  const { skillId, name, description, category, tags, authorName, telegramLink, owner, repo } =
-    await request.json();
+  const {
+    skillId,
+    name,
+    description,
+    category,
+    tags,
+    authorName,
+    telegramLink,
+    owner,
+    repo,
+    type,
+  } = await request.json();
 
   if (!skillId) {
     return NextResponse.json({ error: "skillId required" }, { status: 400 });
@@ -49,6 +59,7 @@ export async function PATCH(request: NextRequest) {
   if (telegramLink !== undefined) data.telegramLink = telegramLink.trim() || null;
   if (owner !== undefined) data.owner = owner.trim();
   if (repo !== undefined) data.repo = repo.trim();
+  if (type !== undefined && ["skill", "mcp", "cli"].includes(type)) data.type = type;
 
   if (Object.keys(data).length === 0) {
     return NextResponse.json({ error: "nothing to update" }, { status: 400 });

@@ -30,6 +30,7 @@ type EditingSkill = {
   tags: string;
   authorName: string;
   telegramLink: string;
+  type: string;
 };
 
 export default function DashboardContent() {
@@ -60,6 +61,7 @@ export default function DashboardContent() {
       tags: skill.tags.join(", "),
       authorName: skill.authorName || "",
       telegramLink: skill.telegramLink || "",
+      type: skill.type,
     });
   }
 
@@ -84,6 +86,7 @@ export default function DashboardContent() {
             .filter(Boolean),
           authorName: editing.authorName,
           telegramLink: editing.telegramLink,
+          type: editing.type,
         }),
       });
 
@@ -158,13 +161,25 @@ export default function DashboardContent() {
                   />
                 </div>
                 <div>
-                  <label className="text-xs text-gray-500 mb-1 block">Категория</label>
-                  <input
-                    value={editing.category}
-                    onChange={(e) => setEditing({ ...editing, category: e.target.value })}
+                  <label className="text-xs text-gray-500 mb-1 block">Тип</label>
+                  <select
+                    value={editing.type}
+                    onChange={(e) => setEditing({ ...editing, type: e.target.value })}
                     className="w-full rounded-md border border-gray-700 bg-gray-950 px-3 py-2 text-sm outline-none focus:border-gray-500"
-                  />
+                  >
+                    <option value="skill">Навык (Skill)</option>
+                    <option value="mcp">MCP сервер</option>
+                    <option value="cli">CLI инструмент</option>
+                  </select>
                 </div>
+              </div>
+              <div>
+                <label className="text-xs text-gray-500 mb-1 block">Категория</label>
+                <input
+                  value={editing.category}
+                  onChange={(e) => setEditing({ ...editing, category: e.target.value })}
+                  className="w-full rounded-md border border-gray-700 bg-gray-950 px-3 py-2 text-sm outline-none focus:border-gray-500"
+                />
               </div>
               <div className="grid grid-cols-2 gap-3">
                 <div>
