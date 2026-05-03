@@ -18,9 +18,9 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const title = "NeuralDeep — агрегатор навыков, MCP серверов и AI-инструментов";
+const title = "NeuralDeep — AI-инфраструктура on-prem в России";
 const description =
-  "Российский агрегатор для AI-агентов: навыки, MCP серверы, CLI инструменты. Яндекс, Битрикс, 1С, GigaChat и другие сервисы. Open source каталог для Claude Code, Cursor, Codex.";
+  "Делаем on-prem LLM-системы, корпоративный поиск, RAG и аудио-транскрипцию на собственных GPU в РФ. 5 продуктов в проде, 1100+⭐ open source — и сделаем под вас.";
 const url = "https://neuraldeep.ru";
 
 export const metadata: Metadata = {
@@ -31,22 +31,24 @@ export const metadata: Metadata = {
   },
   description,
   keywords: [
-    "AI навыки",
+    "LLM API",
+    "on-prem AI",
+    "self-hosted LLM",
+    "OpenAI совместимый API",
+    "корпоративный RAG",
+    "AI-инфраструктура",
+    "GPU on-prem",
     "AI агенты",
+    "MCP серверы",
     "Claude Code",
     "Cursor",
-    "Copilot",
-    "Windsurf",
-    "Cline",
-    "навыки для агентов",
-    "skills",
-    "каталог навыков",
-    "skillsbd",
+    "Whisper",
+    "транскрипция аудио",
+    "российские AI сервисы",
     "Яндекс",
-    "Битрикс",
     "1С",
-    "российские сервисы",
-    "RU комьюнити",
+    "Битрикс",
+    "GigaChat",
   ],
   authors: [{ name: "NeuralDeep" }],
   creator: "NeuralDeep",
